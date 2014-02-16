@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coating.Core", "Coating.Core\Coating.Core.csproj", "{D68B8C27-1AC0-4C87-BE96-7BAECE6C5430}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coating.Tests", "Coating.Tests\Coating.Tests.csproj", "{C2F52E67-769D-460A-B18D-EB9CCB04734A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{D68B8C27-1AC0-4C87-BE96-7BAECE6C5430}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D68B8C27-1AC0-4C87-BE96-7BAECE6C5430}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D68B8C27-1AC0-4C87-BE96-7BAECE6C5430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2F52E67-769D-460A-B18D-EB9CCB04734A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F52E67-769D-460A-B18D-EB9CCB04734A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F52E67-769D-460A-B18D-EB9CCB04734A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F52E67-769D-460A-B18D-EB9CCB04734A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
