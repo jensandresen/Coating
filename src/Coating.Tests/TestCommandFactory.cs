@@ -8,7 +8,7 @@ namespace Coating.Tests
         [Test]
         public void creates_expected_insert_command()
         {
-            var sut = new CommandFactory();
+            var sut = new CommandFactory("Data");
 
             var actual = sut.CreateInsertCommandFor("1", "the data", "the type");
 
@@ -24,7 +24,7 @@ namespace Coating.Tests
         [Test]
         public void creates_expected_update_command()
         {
-            var sut = new CommandFactory();
+            var sut = new CommandFactory("Data");
 
             var actual = sut.CreateUpdateCommandFor("1", "the new data", "the type");
 
@@ -40,7 +40,7 @@ namespace Coating.Tests
         [Test]
         public void creates_expected_delete_command()
         {
-            var sut = new CommandFactory();
+            var sut = new CommandFactory("Data");
 
             var actual = sut.CreateDeleteCommandFor("1");
 
@@ -54,7 +54,7 @@ namespace Coating.Tests
         [Test]
         public void creates_expected_select_by_id_command()
         {
-            var sut = new CommandFactory();
+            var sut = new CommandFactory("Data");
 
             var actual = sut.CreateSelectByIdCommandFor("1");
 
@@ -68,7 +68,7 @@ namespace Coating.Tests
         [Test]
         public void creates_expected_select_by_type_command()
         {
-            var sut = new CommandFactory();
+            var sut = new CommandFactory("Data");
 
             var actual = sut.CreateSelectByTypeCommandFor("Foo");
 

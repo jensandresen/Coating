@@ -53,7 +53,7 @@ namespace Coating.Tests
         [Test]
         public void creates_expected_ado_insert_command()
         {
-            var sut = new CommandFactory();
+            var sut = new CommandFactory("Data");
 
             var actual = sut
                 .CreateInsertCommandFor("1", "the data", "the type")
