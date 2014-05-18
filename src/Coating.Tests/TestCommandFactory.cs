@@ -1,7 +1,4 @@
-﻿using System.Data;
-using System.Data.SqlClient;
-using NUnit.Framework;
-using System.Linq;
+﻿using NUnit.Framework;
 
 namespace Coating.Tests
 {
@@ -13,51 +10,73 @@ namespace Coating.Tests
         {
             var sut = new CommandFactory();
 
-            var actual = sut.CreateInsertCommandFor("Foo/1", "the data", "Foo");
+            var actual = sut.CreateInsertCommandFor("1", "the data", "the type");
 
             var expected = new SqlCommand();
-            expected.CommandText = "insert into Data(Id, Data, Type) values(@Id, @Data, @Type)";
-            expected.CommandType = CommandType.Text;
-            expected.Parameters.AddWithValue("@Id", "Foo/1");
-            expected.Parameters.AddWithValue("@Data", "the data");
-            expected.Parameters.AddWithValue("@Type", "Foo");
+            expected.Sql = "insert into Data(Id, Data, Type) values(@Id, @Data, @Type)";
+            expected.AddParameter("@Id", "1");
+            expected.AddParameter("@Data", "the data");
+            expected.AddParameter("@Type", "the type");
 
-            CompareCommands(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
-        private void CompareCommands(IDbCommand left, IDbCommand right)
+        [Test]
+        public void creates_expected_update_command()
         {
-            Assert.AreEqual(left.CommandText, right.CommandText, "CommandText are not equal");
-            Assert.AreEqual(left.CommandType, right.CommandType, "CommandType are not equal");
+            var sut = new CommandFactory();
 
-            var leftParameters = left
-                .Parameters
-                .Cast<SqlParameter>()
-                .Select(x => new {Name = x.ParameterName, Value = x.Value})
-                .ToArray();
+            var actual = sut.CreateUpdateCommandFor("1", "the new data", "the type");
 
-            var rightParameters = right
-                .Parameters
-                .Cast<SqlParameter>()
-                .Select(x => new {Name = x.ParameterName, Value = x.Value})
-                .ToArray();
+            var expected = new SqlCommand();
+            expected.Sql = "update Data set Data = @Data, Type = @Type where Id = @Id";
+            expected.AddParameter("@Id", "1");
+            expected.AddParameter("@Data", "the new data");
+            expected.AddParameter("@Type", "the type");
 
-            CollectionAssert.AreEquivalent(leftParameters, rightParameters);
+            Assert.AreEqual(expected, actual);
         }
-    }
 
-    public class CommandFactory
-    {
-        public IDbCommand CreateInsertCommandFor(string id, string data, string typeName)
+        [Test]
+        public void creates_expected_delete_command()
         {
-            var cmd = new SqlCommand();
-            cmd.CommandText = "insert into Data(Id, Data, Type) values(@Id, @Data, @Type)";
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.AddWithValue("@Id", id);
-            cmd.Parameters.AddWithValue("@Data", data);
-            cmd.Parameters.AddWithValue("@Type", typeName);
+            var sut = new CommandFactory();
 
-            return cmd;
+            var actual = sut.CreateDeleteCommandFor("1");
+
+            var expected = new SqlCommand();
+            expected.Sql = "delete from Data where Id = @Id";
+            expected.AddParameter("@Id", "1");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void creates_expected_select_by_id_command()
+        {
+            var sut = new CommandFactory();
+
+            var actual = sut.CreateSelectByIdCommandFor("1");
+
+            var expected = new SqlCommand();
+            expected.Sql = "select * from Data where Id = @Id";
+            expected.AddParameter("@Id", "1");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void creates_expected_select_by_type_command()
+        {
+            var sut = new CommandFactory();
+
+            var actual = sut.CreateSelectByTypeCommandFor("Foo");
+
+            var expected = new SqlCommand();
+            expected.Sql = "select * from Data where Type = @Type";
+            expected.AddParameter("@Type", "Foo");
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }
