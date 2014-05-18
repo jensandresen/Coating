@@ -1,6 +1,4 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
 using NUnit.Framework;
 
 namespace Coating.Tests
@@ -66,7 +64,7 @@ namespace Coating.Tests
             expected.Parameters.AddWithValue("@Data", "the data");
             expected.Parameters.AddWithValue("@Type", "the type");
 
-            CompareCommands(expected, actual);
+            DbCommandAssert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -79,26 +77,6 @@ namespace Coating.Tests
             sut.AddParameter("@Type", "the type");
 
             Assert.AreEqual("insert into Data(Id, Data, Type) values('1', 'the data', 'the type')", sut.ToString());
-        }
-
-        private static void CompareCommands(IDbCommand left, IDbCommand right)
-        {
-            Assert.AreEqual(left.CommandText, right.CommandText, "CommandText are not equal");
-            Assert.AreEqual(left.CommandType, right.CommandType, "CommandType are not equal");
-
-            var leftParameters = left
-                .Parameters
-                .Cast<SqlParameter>()
-                .Select(x => new { Name = x.ParameterName, Value = x.Value })
-                .ToArray();
-
-            var rightParameters = right
-                .Parameters
-                .Cast<SqlParameter>()
-                .Select(x => new { Name = x.ParameterName, Value = x.Value })
-                .ToArray();
-
-            CollectionAssert.AreEquivalent(leftParameters, rightParameters);
         }
     }
 }
