@@ -48,7 +48,7 @@
     <Compile Include="CommandFactory.cs" />
     <Compile Include="DbCommandAssert.cs" />
     <Compile Include="IdMap.cs" />
-    <Compile Include="IdService.cs" />
+    <Compile Include="AutoIdService.cs" />
     <Compile Include="IIdMap.cs" />
     <Compile Include="IIdService.cs" />
     <Compile Include="MappedIdService.cs" />
@@ -56,7 +56,7 @@
     <Compile Include="SqlCommand.cs" />
     <Compile Include="SqlCommandParameter.cs" />
     <Compile Include="TestCommandFactory.cs" />
-    <Compile Include="TestIdService.cs" />
+    <Compile Include="TestAutoIdService.cs" />
     <Compile Include="TestMappedIdService.cs" />
     <Compile Include="TestSqlCommand.cs" />
     <Compile Include="TestSqlCommandParameter.cs" />

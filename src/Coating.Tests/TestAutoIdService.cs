@@ -3,12 +3,12 @@
 namespace Coating.Tests
 {
     [TestFixture]
-    public class TestIdService
+    public class TestAutoIdService
     {
         [Test]
         public void returns_expected_default_id_property_name()
         {
-            var sut = new IdService();
+            var sut = new AutoIdService();
             Assert.AreEqual("Id", sut.PropertyName);
         }
 
@@ -19,7 +19,7 @@ namespace Coating.Tests
         [TestCase("Qux")]
         public void returns_expected_id_property_name_when_set(string expectedPropertyName)
         {
-            var sut = new IdService(expectedPropertyName);
+            var sut = new AutoIdService(expectedPropertyName);
             Assert.AreEqual(expectedPropertyName, sut.PropertyName);
         }
 
@@ -33,7 +33,7 @@ namespace Coating.Tests
         [TestCase("with spaces")]
         public void returns_value_of_id_property_by_default(string expected)
         {
-            var sut = new IdService();
+            var sut = new AutoIdService();
             var actual = sut.GetIdFrom(new Foo {Id = expected});
 
             Assert.AreEqual(expected, actual);
@@ -48,7 +48,7 @@ namespace Coating.Tests
                     Key = "Bar"
                 };
 
-            var sut = new IdService("Key");
+            var sut = new AutoIdService("Key");
             var actual = sut.GetIdFrom(foo);
 
             Assert.AreEqual(foo.Key, actual);
@@ -57,7 +57,7 @@ namespace Coating.Tests
         [Test]
         public void returns_null_if_value_of_id_property_is_null()
         {
-            var sut = new IdService();
+            var sut = new AutoIdService();
             var actual = sut.GetIdFrom(new Foo
                 {
                     Id = null,
@@ -70,7 +70,7 @@ namespace Coating.Tests
         [Test]
         public void returns_null_if_trying_to_get_an_id_from_null()
         {
-            var sut = new IdService();
+            var sut = new AutoIdService();
             var actual = sut.GetIdFrom<Foo>(null);
 
             Assert.IsNull(actual);
@@ -79,7 +79,7 @@ namespace Coating.Tests
         [Test]
         public void is_instance_of_common_abstraction()
         {
-            var sut = new IdService();
+            var sut = new AutoIdService();
             Assert.IsInstanceOf<IIdService>(sut);
         }
 

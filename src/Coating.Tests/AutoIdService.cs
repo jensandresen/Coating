@@ -1,15 +1,15 @@
 ﻿namespace Coating.Tests
 {
-    public class IdService : IIdService
+    public class AutoIdService : IIdService
     {
         private readonly string _propertyName;
 
-        public IdService() : this("Id")
+        public AutoIdService() : this("Id")
         {
             
         }
 
-        public IdService(string propertyName)
+        public AutoIdService(string propertyName)
         {
             _propertyName = propertyName;
         }
