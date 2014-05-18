@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandFactory.cs" />
+    <Compile Include="CompositeIdService.cs" />
     <Compile Include="DbCommandAssert.cs" />
     <Compile Include="IdMap.cs" />
     <Compile Include="AutoIdService.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="SqlCommandParameter.cs" />
     <Compile Include="TestCommandFactory.cs" />
     <Compile Include="TestAutoIdService.cs" />
+    <Compile Include="TestCompositeIdService.cs" />
     <Compile Include="TestMappedIdService.cs" />
     <Compile Include="TestSqlCommand.cs" />
     <Compile Include="TestSqlCommandParameter.cs" />
