@@ -53,6 +53,8 @@
     <Compile Include="TestCommandFactory.cs" />
     <Compile Include="TestSqlCommand.cs" />
     <Compile Include="TestSqlCommandParameter.cs" />
+    <Compile Include="TestTypeService.cs" />
+    <Compile Include="TypeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Coating.Core\Coating.Core.csproj">
