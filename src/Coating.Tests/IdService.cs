@@ -14,13 +14,27 @@
             _propertyName = propertyName;
         }
 
-        public string GetIdFrom(object o)
+        public string PropertyName
         {
-            var idProperty = o
-                .GetType()
-                .GetProperty(_propertyName);
+            get { return _propertyName; }
+        }
 
-            return idProperty.GetValue(o, null).ToString();
+        public string GetIdFrom<T>(T o) where T : class
+        {
+            if (o == null)
+            {
+                return null;
+            }
+
+            var idProperty = typeof(T).GetProperty(_propertyName);
+            var value = idProperty.GetValue(o, null);
+
+            if (value == null)
+            {
+                return null;
+            }
+
+            return value.ToString();
         }
     }
 }

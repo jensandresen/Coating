@@ -5,6 +5,24 @@ namespace Coating.Tests
     [TestFixture]
     public class TestIdService
     {
+        [Test]
+        public void returns_expected_default_id_property_name()
+        {
+            var sut = new IdService();
+            Assert.AreEqual("Id", sut.PropertyName);
+        }
+
+        [TestCase("Id")]
+        [TestCase("Foo")]
+        [TestCase("Bar")]
+        [TestCase("Baz")]
+        [TestCase("Qux")]
+        public void returns_expected_id_property_name_when_set(string expectedPropertyName)
+        {
+            var sut = new IdService(expectedPropertyName);
+            Assert.AreEqual(expectedPropertyName, sut.PropertyName);
+        }
+
         [TestCase("1")]
         [TestCase("2")]
         [TestCase("3")]
@@ -34,6 +52,28 @@ namespace Coating.Tests
             var actual = sut.GetIdFrom(foo);
 
             Assert.AreEqual(foo.Key, actual);
+        }
+
+        [Test]
+        public void returns_null_if_value_of_id_property_is_null()
+        {
+            var sut = new IdService();
+            var actual = sut.GetIdFrom(new Foo
+                {
+                    Id = null,
+                    Key = "1"
+                });
+
+            Assert.IsNull(actual);
+        }
+
+        [Test]
+        public void returns_null_if_trying_to_get_an_id_from_null()
+        {
+            var sut = new IdService();
+            var actual = sut.GetIdFrom<Foo>(null);
+
+            Assert.IsNull(actual);
         }
 
         private class Foo
