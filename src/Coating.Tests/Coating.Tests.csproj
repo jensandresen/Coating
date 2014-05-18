@@ -50,6 +50,7 @@
     <Compile Include="IdMap.cs" />
     <Compile Include="IdService.cs" />
     <Compile Include="IIdMap.cs" />
+    <Compile Include="IIdService.cs" />
     <Compile Include="MappedIdService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlCommand.cs" />

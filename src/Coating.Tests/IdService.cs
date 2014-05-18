@@ -1,6 +1,6 @@
 ﻿namespace Coating.Tests
 {
-    public class IdService
+    public class IdService : IIdService
     {
         private readonly string _propertyName;
 

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Coating.Tests
 {
-    public class MappedIdService
+    public class MappedIdService : IIdService
     {
         private readonly Dictionary<Type, IIdMap> _maps = new Dictionary<Type, IIdMap>();
 

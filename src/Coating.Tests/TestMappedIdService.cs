@@ -120,6 +120,13 @@ namespace Coating.Tests
             Assert.Throws<Exception>(() => sut.Map<Foo>(x => x.Key));
         }
 
+        [Test]
+        public void is_instance_of_common_abstraction()
+        {
+            var sut = new MappedIdService();
+            Assert.IsInstanceOf<IIdService>(sut);
+        }
+
         private class Foo
         {
             public string Id { get; set; }

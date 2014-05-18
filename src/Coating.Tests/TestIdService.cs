@@ -76,6 +76,13 @@ namespace Coating.Tests
             Assert.IsNull(actual);
         }
 
+        [Test]
+        public void is_instance_of_common_abstraction()
+        {
+            var sut = new IdService();
+            Assert.IsInstanceOf<IIdService>(sut);
+        }
+
         private class Foo
         {
             public string Id { get; set; }
