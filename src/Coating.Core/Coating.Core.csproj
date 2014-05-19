@@ -7,8 +7,8 @@
     <ProjectGuid>{D68B8C27-1AC0-4C87-BE96-7BAECE6C5430}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Coating.Core</RootNamespace>
-    <AssemblyName>Coating.Core</AssemblyName>
+    <RootNamespace>Coating</RootNamespace>
+    <AssemblyName>Coating</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

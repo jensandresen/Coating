@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Coating.Core
+namespace Coating
 {
     public class MappedIdService : IIdService
     {

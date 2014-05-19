@@ -1,4 +1,4 @@
-namespace Coating.Core
+namespace Coating
 {
     public class SqlCommandParameter
     {

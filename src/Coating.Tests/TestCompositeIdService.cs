@@ -1,5 +1,4 @@
 ﻿using System;
-using Coating.Core;
 using Moq;
 using NUnit.Framework;
 

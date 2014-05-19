@@ -1,6 +1,6 @@
 using System;
 
-namespace Coating.Core
+namespace Coating
 {
     public class CompositeIdService : IIdService
     {

@@ -1,5 +1,4 @@
-﻿using Coating.Core;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Coating.Tests
 {

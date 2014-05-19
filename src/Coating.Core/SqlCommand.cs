@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Coating.Core
+namespace Coating
 {
     public class SqlCommand
     {
