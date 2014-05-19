@@ -21,67 +21,102 @@ namespace Coating.Tests
         }
 
         [Test]
-        public void end_to_end_with_default_settings()
+        public void command_executor_returns_expected()
         {
+            var expectedExecutor = new Mock<ISqlCommandExecutor>().Object;
+
+            var sut = new DocumentsBuilder()
+                .WithSqlCommandExecutor(expectedExecutor)
+                .Build();
+
+            Assert.AreSame(expectedExecutor, sut.SqlCommandExecutor);
+        }
+
+        [Test]
+        public void store_executes_expected_insert_command()
+        {
+            var mockExecutor = new Mock<ISqlCommandExecutor>();
+            
+            var dummyInsertCommand = new SqlCommand();
+            var dummyDbConnection = new Mock<IDbConnection>().Object;
+
+            var sut = new DocumentsBuilder()
+                .WithDbConnection(dummyDbConnection)
+                .WithSqlCommandExecutor(mockExecutor.Object)
+                .WithCommandFactory(new StubCommandFactory(dummyInsertCommand))
+                .Build();
+
+            var dummyDocument = new object();
+            sut.Save(dummyDocument);
+
+            mockExecutor.Verify(x => x.ExecuteNonQuery(dummyDbConnection, dummyInsertCommand));
+        }
+
+        [Test]
+        public void save_generates_id_for_document()
+        {
+            
+
+            Assert.AreEqual("Foo/1", actual);
         }
 
         private class Foo
         {
             public string Id { get; set; }
-            public string Key { get; set; }
         }
     }
 
-    public class SpyDbConnection : IDbConnection
+    public interface ISqlCommandExecutor
     {
-        public void Dispose()
+        void ExecuteNonQuery(IDbConnection dbConnection, SqlCommand sqlCommand);
+    }
+
+    public class StubCommandFactory : ICommandFactory
+    {
+        private readonly SqlCommand _result;
+
+        public StubCommandFactory(SqlCommand result)
         {
-            throw new System.NotImplementedException();
+            _result = result;
         }
 
-        public IDbTransaction BeginTransaction()
+        public SqlCommand CreateInsertCommandFor(string id, string data, string typeName)
         {
-            throw new System.NotImplementedException();
+            return _result;
         }
 
-        public IDbTransaction BeginTransaction(IsolationLevel il)
+        public SqlCommand CreateUpdateCommandFor(string id, string theNewData, string typeName)
         {
-            throw new System.NotImplementedException();
+            return _result;
         }
 
-        public void Close()
+        public SqlCommand CreateDeleteCommandFor(string id)
         {
-            throw new System.NotImplementedException();
+            return _result;
         }
 
-        public void ChangeDatabase(string databaseName)
+        public SqlCommand CreateSelectByIdCommandFor(string id)
         {
-            throw new System.NotImplementedException();
+            return _result;
         }
 
-        public IDbCommand CreateCommand()
+        public SqlCommand CreateSelectByTypeCommandFor(string typeName)
         {
-            throw new System.NotImplementedException();
+            return _result;
         }
-
-        public void Open()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public string ConnectionString { get; set; }
-        public int ConnectionTimeout { get; private set; }
-        public string Database { get; private set; }
-        public ConnectionState State { get; private set; }
     }
 
     public class DocumentsBuilder
     {
         private IDbConnection _dbConnection;
+        private ISqlCommandExecutor _sqlCommandExecutor;
+        private ICommandFactory _commandFactory;
 
         public DocumentsBuilder()
         {
             _dbConnection = new Mock<IDbConnection>().Object;
+            _sqlCommandExecutor = new Mock<ISqlCommandExecutor>().Object;
+            _commandFactory = new Mock<ICommandFactory>().Object;
         }
 
         public DocumentsBuilder WithDbConnection(IDbConnection dbConnection)
@@ -90,24 +125,51 @@ namespace Coating.Tests
             return this;
         }
 
+        public DocumentsBuilder WithSqlCommandExecutor(ISqlCommandExecutor sqlCommandExecutor)
+        {
+            _sqlCommandExecutor = sqlCommandExecutor;
+            return this;
+        }
+
+        public DocumentsBuilder WithCommandFactory(ICommandFactory commandFactory)
+        {
+            _commandFactory = commandFactory;
+            return this;
+        }
+
         public Documents Build()
         {
-            return new Documents(_dbConnection);
+            return new Documents(_dbConnection, _sqlCommandExecutor, _commandFactory);
         }
     }
 
     public class Documents
     {
         private readonly IDbConnection _dbConnection;
+        private readonly ISqlCommandExecutor _sqlCommandExecutor;
+        private readonly ICommandFactory _commandFactory;
 
-        public Documents(IDbConnection dbConnection)
+        public Documents(IDbConnection dbConnection, ISqlCommandExecutor sqlCommandExecutor, ICommandFactory commandFactory)
         {
             _dbConnection = dbConnection;
+            _sqlCommandExecutor = sqlCommandExecutor;
+            _commandFactory = commandFactory;
         }
 
         public IDbConnection DbConnection
         {
             get { return _dbConnection; }
+        }
+
+        public ISqlCommandExecutor SqlCommandExecutor
+        {
+            get { return _sqlCommandExecutor; }
+        }
+
+        public void Save(object document)
+        {
+            var insertCommand = _commandFactory.CreateInsertCommandFor("", "", "");
+            _sqlCommandExecutor.ExecuteNonQuery(_dbConnection, insertCommand);
         }
     }
 }

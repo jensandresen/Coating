@@ -45,6 +45,7 @@
     <Compile Include="AutoIdService.cs" />
     <Compile Include="CommandFactory.cs" />
     <Compile Include="CompositeIdService.cs" />
+    <Compile Include="ICommandFactory.cs" />
     <Compile Include="IdMap.cs" />
     <Compile Include="IIdMap.cs" />
     <Compile Include="IIdService.cs" />

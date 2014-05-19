@@ -1,6 +1,6 @@
 namespace Coating
 {
-    public class CommandFactory
+    public class CommandFactory : ICommandFactory
     {
         private readonly string _tableName;
 
