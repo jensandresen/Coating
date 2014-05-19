@@ -39,7 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoIdService.cs" />
+    <Compile Include="CommandFactory.cs" />
+    <Compile Include="CompositeIdService.cs" />
+    <Compile Include="IdMap.cs" />
+    <Compile Include="IIdMap.cs" />
+    <Compile Include="IIdService.cs" />
+    <Compile Include="MappedIdService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlCommand.cs" />
+    <Compile Include="SqlCommandParameter.cs" />
+    <Compile Include="TypeService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Coating.Tests
+namespace Coating.Core
 {
     public class IdMap<T> : IIdMap where T : class
     {

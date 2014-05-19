@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Coating.Tests
+namespace Coating.Core
 {
     public class MappedIdService : IIdService
     {

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Coating.Tests
+namespace Coating.Core
 {
     public class CompositeIdService : IIdService
     {

@@ -1,4 +1,4 @@
-﻿namespace Coating.Tests
+namespace Coating.Core
 {
     public interface IIdService
     {
