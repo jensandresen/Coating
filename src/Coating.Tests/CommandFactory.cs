@@ -12,7 +12,7 @@
         public SqlCommand CreateInsertCommandFor(string id, string data, string typeName)
         {
             var cmd = new SqlCommand();
-            cmd.Sql = "insert into Data(Id, Data, Type) values(@Id, @Data, @Type)";
+            cmd.Sql = "insert into " + _tableName + "(Id, Data, Type) values(@Id, @Data, @Type)";
             cmd.AddParameter("@Id", id);
             cmd.AddParameter("@Data", data);
             cmd.AddParameter("@Type", typeName);
