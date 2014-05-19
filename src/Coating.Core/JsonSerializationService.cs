@@ -2,7 +2,7 @@
 
 namespace Coating
 {
-    public class JsonSerializationService
+    public class JsonSerializationService : ISerializationService
     {
         private readonly JsonSerializerSettings _settings;
 
