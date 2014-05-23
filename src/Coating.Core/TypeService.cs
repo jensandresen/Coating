@@ -1,6 +1,6 @@
 namespace Coating
 {
-    public class TypeService
+    public class TypeService : ITypeService
     {
         public string GetTypeNameFrom(object o)
         {

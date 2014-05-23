@@ -50,6 +50,7 @@
     <Compile Include="IIdMap.cs" />
     <Compile Include="IIdService.cs" />
     <Compile Include="ISerializationService.cs" />
+    <Compile Include="ITypeService.cs" />
     <Compile Include="JsonSerializationService.cs" />
     <Compile Include="MappedIdService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
