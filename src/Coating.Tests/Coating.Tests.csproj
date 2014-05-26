@@ -50,6 +50,7 @@
     <Compile Include="TestCommandFactory.cs" />
     <Compile Include="TestAutoIdService.cs" />
     <Compile Include="TestCompositeIdService.cs" />
+    <Compile Include="TestDatabaseFacade.cs" />
     <Compile Include="TestDocuments.cs" />
     <Compile Include="TestJsonSerializationService.cs" />
     <Compile Include="TestMappedIdService.cs" />
