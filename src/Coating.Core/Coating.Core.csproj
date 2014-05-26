@@ -52,6 +52,7 @@
     <Compile Include="ICommandExecutor.cs" />
     <Compile Include="ICommandFactory.cs" />
     <Compile Include="ICommandMapper.cs" />
+    <Compile Include="IDatabaseFacade.cs" />
     <Compile Include="IdMap.cs" />
     <Compile Include="IIdMap.cs" />
     <Compile Include="IIdService.cs" />

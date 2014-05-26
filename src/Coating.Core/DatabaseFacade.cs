@@ -2,7 +2,7 @@ using System.Data;
 
 namespace Coating
 {
-    public class DatabaseFacade
+    public class DatabaseFacade : IDatabaseFacade
     {
         private readonly IDbConnection _connection;
         private readonly ICommandFactory _commandFactory;

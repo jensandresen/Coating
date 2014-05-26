@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Builders\DatabaseFacadeBuilder.cs" />
     <Compile Include="Builders\DefaultCommandExecutorBuilder.cs" />
-    <Compile Include="Builders\DocumentsBuilder.cs" />
     <Compile Include="Builders\SqlCommandBuilder.cs" />
     <Compile Include="DbCommandAssert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
