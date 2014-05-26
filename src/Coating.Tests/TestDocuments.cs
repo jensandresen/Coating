@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Coating.Tests.Builders;
 using Moq;
 using NUnit.Framework;
 

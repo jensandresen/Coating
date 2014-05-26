@@ -1,6 +1,6 @@
-﻿using System.Data;
+using System.Data;
 
-namespace Coating.Tests
+namespace Coating.Tests.TestDoubles
 {
     public class StubCommandMapper : ICommandMapper
     {

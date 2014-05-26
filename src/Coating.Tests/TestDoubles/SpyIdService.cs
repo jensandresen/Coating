@@ -1,4 +1,4 @@
-﻿namespace Coating.Tests
+namespace Coating.Tests.TestDoubles
 {
     public class SpyIdService : IIdService
     {

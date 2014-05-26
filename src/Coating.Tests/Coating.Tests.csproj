@@ -46,28 +46,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\DatabaseFacadeBuilder.cs" />
+    <Compile Include="Builders\DefaultCommandExecutorBuilder.cs" />
+    <Compile Include="Builders\DocumentsBuilder.cs" />
     <Compile Include="Builders\SqlCommandBuilder.cs" />
     <Compile Include="DatabaseFacade.cs" />
     <Compile Include="DataDocument.cs" />
     <Compile Include="DbCommandAssert.cs" />
     <Compile Include="DefaultCommandExecutor.cs" />
-    <Compile Include="DefaultCommandExecutorBuilder.cs" />
     <Compile Include="Documents.cs" />
-    <Compile Include="DocumentsBuilder.cs" />
     <Compile Include="ICommandExecutor.cs" />
     <Compile Include="ICommandMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpyDbCommand.cs" />
-    <Compile Include="SpyIdService.cs" />
-    <Compile Include="StubCommandMapper.cs" />
-    <Compile Include="StubIdService.cs" />
     <Compile Include="TestCommandFactory.cs" />
     <Compile Include="TestAutoIdService.cs" />
     <Compile Include="TestCompositeIdService.cs" />
     <Compile Include="TestDatabaseFacade.cs" />
     <Compile Include="TestDefaultCommandExecutor.cs" />
     <Compile Include="TestDocuments.cs" />
+    <Compile Include="TestDoubles\SpyDbCommand.cs" />
+    <Compile Include="TestDoubles\SpyIdService.cs" />
     <Compile Include="TestDoubles\StubCommandFactory.cs" />
+    <Compile Include="TestDoubles\StubCommandMapper.cs" />
+    <Compile Include="TestDoubles\StubIdService.cs" />
     <Compile Include="TestJsonSerializationService.cs" />
     <Compile Include="TestMappedIdService.cs" />
     <Compile Include="TestSqlCommand.cs" />

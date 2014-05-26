@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Coating.Tests.Builders;
+using Coating.Tests.TestDoubles;
 using Moq;
 using NUnit.Framework;
 

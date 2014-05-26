@@ -1,7 +1,7 @@
-﻿using System.Data;
+using System.Data;
 using Moq;
 
-namespace Coating.Tests
+namespace Coating.Tests.Builders
 {
     public class DocumentsBuilder
     {
