@@ -23,7 +23,7 @@ namespace Coating.Tests
         public void Insert(DataDocument document)
         {
             var cmd = _commandFactory.CreateInsertCommandFor(document.Id, document.Data, document.Type);
-            _commandExecutor.Execute(cmd);
+            _commandExecutor.ExecuteWriteCommand(cmd);
         }
     }
 }

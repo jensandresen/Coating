@@ -2,6 +2,6 @@
 {
     public interface ICommandExecutor
     {
-        void Execute(SqlCommand sqlCommand);
+        void ExecuteWriteCommand(SqlCommand sqlCommand);
     }
 }

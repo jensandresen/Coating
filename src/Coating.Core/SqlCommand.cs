@@ -19,7 +19,7 @@ namespace Coating
                 });
         }
 
-        public IDbCommand ToAdoCommand()
+        public virtual IDbCommand ToAdoCommand()
         {
             var cmd = new System.Data.SqlClient.SqlCommand();
             cmd.CommandText = Sql;

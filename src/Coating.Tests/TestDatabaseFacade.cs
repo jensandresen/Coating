@@ -56,7 +56,7 @@ namespace Coating.Tests
 
             sut.Insert(dummyDocument);
 
-            mock.Verify(x => x.Execute(dummyInsertCommand));
+            mock.Verify(x => x.ExecuteWriteCommand(dummyInsertCommand));
         }
     }
 }
