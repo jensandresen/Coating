@@ -45,7 +45,13 @@
     <Compile Include="AutoIdService.cs" />
     <Compile Include="CommandFactory.cs" />
     <Compile Include="CompositeIdService.cs" />
+    <Compile Include="DatabaseFacade.cs" />
+    <Compile Include="DataDocument.cs" />
+    <Compile Include="DefaultCommandExecutor.cs" />
+    <Compile Include="Documents.cs" />
+    <Compile Include="ICommandExecutor.cs" />
     <Compile Include="ICommandFactory.cs" />
+    <Compile Include="ICommandMapper.cs" />
     <Compile Include="IdMap.cs" />
     <Compile Include="IIdMap.cs" />
     <Compile Include="IIdService.cs" />
