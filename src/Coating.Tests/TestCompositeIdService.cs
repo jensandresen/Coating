@@ -113,30 +113,4 @@ namespace Coating.Tests
             Assert.Throws<ArgumentNullException>(() => new CompositeIdService(new Mock<IIdService>().Object, null));
         }
     }
-
-    public class SpyIdService : IIdService
-    {
-        public bool wasCalled = false;
-
-        public string GetIdFrom<T>(T o) where T : class
-        {
-            wasCalled = true;
-            return "";
-        }
-    }
-
-    public class StubIdService : IIdService
-    {
-        private readonly string _result;
-
-        public StubIdService(string result)
-        {
-            _result = result;
-        }
-
-        public string GetIdFrom<T>(T o) where T : class
-        {
-            return _result;
-        }
-    }
 }

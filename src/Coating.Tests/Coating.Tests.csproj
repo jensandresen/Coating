@@ -52,11 +52,15 @@
     <Compile Include="DbCommandAssert.cs" />
     <Compile Include="DefaultCommandExecutor.cs" />
     <Compile Include="DefaultCommandExecutorBuilder.cs" />
+    <Compile Include="Documents.cs" />
+    <Compile Include="DocumentsBuilder.cs" />
     <Compile Include="ICommandExecutor.cs" />
     <Compile Include="ICommandMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpyDbCommand.cs" />
+    <Compile Include="SpyIdService.cs" />
     <Compile Include="StubCommandMapper.cs" />
+    <Compile Include="StubIdService.cs" />
     <Compile Include="TestCommandFactory.cs" />
     <Compile Include="TestAutoIdService.cs" />
     <Compile Include="TestCompositeIdService.cs" />
