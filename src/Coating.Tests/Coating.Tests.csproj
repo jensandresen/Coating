@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Builders\DatabaseFacadeBuilder.cs" />
     <Compile Include="Builders\DefaultCommandExecutorBuilder.cs" />
+    <Compile Include="Builders\DocumentsBuilder.cs" />
     <Compile Include="Builders\SqlCommandBuilder.cs" />
     <Compile Include="DbCommandAssert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,11 +57,13 @@
     <Compile Include="TestDatabaseFacade.cs" />
     <Compile Include="TestDefaultCommandExecutor.cs" />
     <Compile Include="TestDocuments.cs" />
+    <Compile Include="TestDoubles\SpyDatabaseFacade.cs" />
     <Compile Include="TestDoubles\SpyDbCommand.cs" />
     <Compile Include="TestDoubles\SpyIdService.cs" />
     <Compile Include="TestDoubles\StubCommandFactory.cs" />
     <Compile Include="TestDoubles\StubCommandMapper.cs" />
     <Compile Include="TestDoubles\StubIdService.cs" />
+    <Compile Include="TestDoubles\StubTypeService.cs" />
     <Compile Include="TestJsonSerializationService.cs" />
     <Compile Include="TestMappedIdService.cs" />
     <Compile Include="TestSqlCommand.cs" />

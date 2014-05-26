@@ -15,6 +15,26 @@ namespace Coating
             _serializationService = serializationService;
         }
 
+        public IDatabaseFacade DatabaseFacade
+        {
+            get { return _databaseFacade; }
+        }
+
+        public IIdService IdService
+        {
+            get { return _idService; }
+        }
+
+        public ITypeService TypeService
+        {
+            get { return _typeService; }
+        }
+
+        public ISerializationService SerializationService
+        {
+            get { return _serializationService; }
+        }
+
         public void Save(object document)
         {
             var documentId = _idService.GetIdFrom(document);
