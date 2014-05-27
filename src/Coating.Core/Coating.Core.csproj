@@ -47,6 +47,7 @@
     <Compile Include="CompositeIdService.cs" />
     <Compile Include="DatabaseFacade.cs" />
     <Compile Include="DataDocument.cs" />
+    <Compile Include="DataRecordExtensions.cs" />
     <Compile Include="DefaultCommandExecutor.cs" />
     <Compile Include="Documents.cs" />
     <Compile Include="ICommandExecutor.cs" />

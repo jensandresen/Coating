@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 
 namespace Coating
@@ -19,6 +20,20 @@ namespace Coating
             {
                 dbCommand.Connection = _connection;
                 dbCommand.ExecuteNonQuery();
+            }
+        }
+
+        public IEnumerable<IDataRecord> ExecuteReadCommand(SqlCommand sqlCommand)
+        {
+            using (var dbCommand = _mapper.Map(sqlCommand))
+            {
+                using (var reader = dbCommand.ExecuteReader())
+                {
+                    while (reader != null && reader.Read())
+                    {
+                        yield return reader;
+                    }
+                }
             }
         }
     }

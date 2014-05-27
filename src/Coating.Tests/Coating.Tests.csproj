@@ -55,6 +55,7 @@
     <Compile Include="TestAutoIdService.cs" />
     <Compile Include="TestCompositeIdService.cs" />
     <Compile Include="TestDatabaseFacade.cs" />
+    <Compile Include="TestDataRecordExtensions.cs" />
     <Compile Include="TestDefaultCommandExecutor.cs" />
     <Compile Include="TestDocuments.cs" />
     <Compile Include="TestDoubles\SpyDatabaseFacade.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="TestDoubles\SpyIdService.cs" />
     <Compile Include="TestDoubles\StubCommandFactory.cs" />
     <Compile Include="TestDoubles\StubCommandMapper.cs" />
+    <Compile Include="TestDoubles\StubDataRecord.cs" />
     <Compile Include="TestDoubles\StubIdService.cs" />
     <Compile Include="TestDoubles\StubSerializationService.cs" />
     <Compile Include="TestDoubles\StubTypeService.cs" />

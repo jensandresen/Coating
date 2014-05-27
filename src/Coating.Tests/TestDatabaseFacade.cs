@@ -35,16 +35,57 @@ namespace Coating.Tests
             var mock = new Mock<ICommandExecutor>();
             
             var dummyDocument = new DataDocument();
-            var dummyInsertCommand = new SqlCommandBuilder().Build();
+            var dummyCommand = new SqlCommandBuilder().Build();
 
             var sut = new DatabaseFacadeBuilder()
-                .WithCommandFactory(new StubCommandFactory(insert: dummyInsertCommand))
+                .WithCommandFactory(new StubCommandFactory(insert: dummyCommand))
                 .WithExecutor(mock.Object)
                 .Build();
 
             sut.Insert(dummyDocument);
 
-            mock.Verify(x => x.ExecuteWriteCommand(dummyInsertCommand));
+            mock.Verify(x => x.ExecuteWriteCommand(dummyCommand));
         }
+
+        [Test]
+        public void creates_expected_command_for_update()
+        {
+            var mockCommandFactory = new Mock<ICommandFactory>();
+
+            var sut = new DatabaseFacadeBuilder()
+                .WithCommandFactory(mockCommandFactory.Object)
+                .Build();
+
+            var stubDocument = new DataDocument
+            {
+                Id = "1",
+                Data = "foo",
+                Type = "bar"
+            };
+
+            sut.Update(stubDocument);
+
+            mockCommandFactory.Verify(x => x.CreateUpdateCommandFor(stubDocument.Id, stubDocument.Data, stubDocument.Type));
+        }
+
+        [Test]
+        public void executes_update_command()
+        {
+            var mock = new Mock<ICommandExecutor>();
+
+            var dummyDocument = new DataDocument();
+            var dummyCommand = new SqlCommandBuilder().Build();
+
+            var sut = new DatabaseFacadeBuilder()
+                .WithCommandFactory(new StubCommandFactory(update: dummyCommand))
+                .WithExecutor(mock.Object)
+                .Build();
+
+            sut.Update(dummyDocument);
+
+            mock.Verify(x => x.ExecuteWriteCommand(dummyCommand));
+        }
+
+
     }
 }
