@@ -56,6 +56,21 @@ namespace Coating.Tests
             Assert.AreSame(dummy, sut.SerializationService);
         }
 
+        [Test]
+        public void inserts_data_document_when_saving()
+        {
+            var mock = new Mock<IDatabaseFacade>();
+
+            var sut = new DocumentsBuilder()
+                .WithDatabaseFacade(mock.Object)
+                .Build();
+
+            var dummyDocument = new object();
+            sut.Save(dummyDocument);
+
+            mock.Verify(x => x.Insert(It.IsAny<DataDocument>()));
+        }
+
         [TestCase("Foo", "1", "Foo/1")]
         [TestCase("Bar", "2", "Bar/2")]
         [TestCase("Foo", "Bar", "Foo/Bar")]
@@ -73,6 +88,44 @@ namespace Coating.Tests
             sut.Save(dummyDocument);
 
             Assert.AreEqual(expectedId, spyDatabaseFacade.insertedDocument.Id);
+        }
+
+        [TestCase("Foo")]
+        [TestCase("Bar")]
+        [TestCase("Baz")]
+        [TestCase("Qux")]
+        public void generates_expected_typename_from_document_when_saving(string expectedTypeName)
+        {
+            var spyDatabaseFacade = new SpyDatabaseFacade();
+
+            var sut = new DocumentsBuilder()
+                .WithTypeService(new StubTypeService(expectedTypeName))
+                .WithDatabaseFacade(spyDatabaseFacade)
+                .Build();
+
+            var dummyDocument = new object();
+            sut.Save(dummyDocument);
+
+            Assert.AreEqual(expectedTypeName, spyDatabaseFacade.insertedDocument.Type);
+        }
+
+        [TestCase("Foo")]
+        [TestCase("Bar")]
+        [TestCase("Baz")]
+        [TestCase("Qux")]
+        public void generates_expected_data_from_document_when_saving(string expectedData)
+        {
+            var spyDatabaseFacade = new SpyDatabaseFacade();
+
+            var sut = new DocumentsBuilder()
+                .WithSerializationService(new StubSerializationService(expectedData))
+                .WithDatabaseFacade(spyDatabaseFacade)
+                .Build();
+
+            var dummyDocument = new object();
+            sut.Save(dummyDocument);
+
+            Assert.AreEqual(expectedData, spyDatabaseFacade.insertedDocument.Data);
         }
     }
 }
