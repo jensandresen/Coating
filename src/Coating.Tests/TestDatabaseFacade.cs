@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Coating.Tests.Builders;
+﻿using Coating.Tests.Builders;
 using Coating.Tests.TestDoubles;
 using Moq;
 using NUnit.Framework;
@@ -9,17 +8,6 @@ namespace Coating.Tests
     [TestFixture]
     public class TestDatabaseFacade
     {
-        [Test]
-        public void returns_expected_connection()
-        {
-            var expected = new Mock<IDbConnection>().Object;
-            var sut = new DatabaseFacadeBuilder()
-                .WithConnection(expected)
-                .Build();
-
-            Assert.AreEqual(expected, sut.Connection);
-        }
-
         [Test]
         public void creates_expected_command_for_insert()
         {

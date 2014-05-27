@@ -1,23 +1,14 @@
-using System.Data;
-
 namespace Coating
 {
     public class DatabaseFacade : IDatabaseFacade
     {
-        private readonly IDbConnection _connection;
         private readonly ICommandFactory _commandFactory;
         private readonly ICommandExecutor _commandExecutor;
 
-        public DatabaseFacade(IDbConnection connection, ICommandFactory commandFactory, ICommandExecutor commandExecutor)
+        public DatabaseFacade(ICommandFactory commandFactory, ICommandExecutor commandExecutor)
         {
-            _connection = connection;
             _commandFactory = commandFactory;
             _commandExecutor = commandExecutor;
-        }
-
-        public IDbConnection Connection
-        {
-            get { return _connection; }
         }
 
         public void Insert(DataDocument document)
