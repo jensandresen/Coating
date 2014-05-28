@@ -58,6 +58,7 @@
     <Compile Include="TestDataRecordExtensions.cs" />
     <Compile Include="TestDefaultCommandExecutor.cs" />
     <Compile Include="TestDocuments.cs" />
+    <Compile Include="TestDoubles\AbstractDatabaseFacade.cs" />
     <Compile Include="TestDoubles\SpyDatabaseFacade.cs" />
     <Compile Include="TestDoubles\SpyDbCommand.cs" />
     <Compile Include="TestDoubles\SpyIdService.cs" />
