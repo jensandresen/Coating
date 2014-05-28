@@ -1,7 +1,12 @@
+using System.Collections.Generic;
+
 namespace Coating
 {
     public interface IDatabaseFacade
     {
         void Insert(DataDocument document);
+        void Update(DataDocument document);
+        DataDocument SelectById(string id);
+        IEnumerable<DataDocument> SelectByType(string typeName);
     }
 }

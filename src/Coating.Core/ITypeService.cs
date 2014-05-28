@@ -2,6 +2,7 @@ namespace Coating
 {
     public interface ITypeService
     {
-        string GetTypeNameFrom(object o);
+        string GetTypeNameFrom(object instance);
+        string GetTypeNameFrom<T>();
     }
 }

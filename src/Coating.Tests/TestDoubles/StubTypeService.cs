@@ -9,7 +9,12 @@
             _result = result;
         }
 
-        public string GetTypeNameFrom(object o)
+        public string GetTypeNameFrom(object instance)
+        {
+            return _result;
+        }
+
+        public string GetTypeNameFrom<T>()
         {
             return _result;
         }

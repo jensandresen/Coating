@@ -2,21 +2,23 @@
 {
     public class StubSerializationService :  ISerializationService
     {
-        private readonly string _result;
+        private readonly string _serializationResult;
+        private readonly object _deserializationResult;
 
-        public StubSerializationService(string result)
+        public StubSerializationService(string serializationResult = null, object deserializationResult = null)
         {
-            _result = result;
+            _serializationResult = serializationResult;
+            _deserializationResult = deserializationResult;
         }
 
         public string Serialize(object o)
         {
-            return _result;
+            return _serializationResult;
         }
 
         public T Deserialize<T>(string jsonData) where T : class
         {
-            throw new System.NotImplementedException();
+            return (T) _deserializationResult;
         }
     }
 }

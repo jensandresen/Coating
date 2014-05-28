@@ -1,4 +1,5 @@
-﻿using Coating.Tests.Builders;
+﻿using System.Linq;
+using Coating.Tests.Builders;
 using Coating.Tests.TestDoubles;
 using Moq;
 using NUnit.Framework;
@@ -126,6 +127,107 @@ namespace Coating.Tests
             sut.Save(dummyDocument);
 
             Assert.AreEqual(expectedData, spyDatabaseFacade.insertedDocument.Data);
+        }
+
+        [Test]
+        public void retrieve_returns_null_when_nothing_is_found()
+        {
+            DataDocument nullDataDocument = null;
+
+            var sut = new DocumentsBuilder()
+                .WithDatabaseFacade(new StubDatabaseFacade(nullDataDocument))
+                .Build();
+
+            var result = sut.Retrieve<object>("dummy id");
+
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void retrieve_deserializes_found_data_document()
+        {
+            var mockSerializationService = new Mock<ISerializationService>();
+
+            var stubDataDocument = new DataDocument
+                {
+                    Data = "foo"
+                };
+
+            var sut = new DocumentsBuilder()
+                .WithDatabaseFacade(new StubDatabaseFacade(stubDataDocument))
+                .WithSerializationService(mockSerializationService.Object)
+                .Build();
+
+            sut.Retrieve<object>("dummy id");
+
+            mockSerializationService.Verify(x => x.Deserialize<object>(stubDataDocument.Data));
+        }
+
+        [Test]
+        public void retrieve_returns_deserialized_data()
+        {
+            var expected = new object();
+            var dummyDataDocument = new DataDocument();
+
+            var sut = new DocumentsBuilder()
+                .WithSerializationService(new StubSerializationService(deserializationResult: expected))
+                .WithDatabaseFacade(new StubDatabaseFacade(dummyDataDocument))
+                .Build();
+
+            var result = sut.Retrieve<object>("dummy id");
+
+            Assert.AreSame(expected, result);
+        }
+
+        [Test]
+        public void retrieveall_returns_empty_list_when_nothing_was_found()
+        {
+            var sut = new DocumentsBuilder()
+                .WithDatabaseFacade(new StubDatabaseFacade(selectByTypeResult: Enumerable.Empty<DataDocument>()))
+                .Build();
+
+            var result = sut.RetrieveAll<object>();
+
+            Assert.IsNotNull(result);
+            Assert.IsEmpty(result);
+        }
+
+        [TestCase("Foo")]
+        [TestCase("Bar")]
+        [TestCase("Baz")]
+        [TestCase("Qux")]
+        public void retrieveall_uses_expected_typename_to_retrieve_data_documents(string expectedTypeName)
+        {
+            var mockDatabaseFacade = new Mock<IDatabaseFacade>();
+
+            var sut = new DocumentsBuilder()
+                .WithDatabaseFacade(mockDatabaseFacade.Object)
+                .WithTypeService(new StubTypeService(expectedTypeName))
+                .Build();
+
+            sut.RetrieveAll<object>().ToArray();
+
+            mockDatabaseFacade.Verify(x => x.SelectByType(expectedTypeName));
+        }
+
+        [Test]
+        public void retrieveall_deserializes_all_data_documents_found()
+        {
+            var mockSerializationService = new Mock<ISerializationService>();
+
+            var sut = new DocumentsBuilder()
+                .WithSerializationService(mockSerializationService.Object)
+                .WithDatabaseFacade(new StubDatabaseFacade(selectByTypeResult: new[]
+                    {
+                        new DataDocument(),
+                        new DataDocument(),
+                        new DataDocument(),
+                    }))
+                .Build();
+
+            sut.RetrieveAll<object>().ToArray();
+
+            mockSerializationService.Verify(x => x.Deserialize<object>(It.IsAny<string>()), Times.Exactly(3));
         }
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Coating
 {
     public class Documents
@@ -48,6 +50,29 @@ namespace Coating
                     Type = documentType,
                     Data = data
                 });
+        }
+
+        public T Retrieve<T>(string id) where T : class, new()
+        {
+            var dataDocument = _databaseFacade.SelectById(id);
+
+            if (dataDocument == null)
+            {
+                return null;
+            }
+
+            return _serializationService.Deserialize<T>(dataDocument.Data);
+        }
+
+        public IEnumerable<T> RetrieveAll<T>() where T : class, new()
+        {
+            var typeName = _typeService.GetTypeNameFrom<T>();
+            var dataDocuments = _databaseFacade.SelectByType(typeName);
+
+            foreach (var document in dataDocuments) 
+            {
+                yield return _serializationService.Deserialize<T>(document.Data);
+            }
         }
     }
 }
