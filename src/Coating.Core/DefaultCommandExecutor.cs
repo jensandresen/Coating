@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -14,7 +15,12 @@ namespace Coating
             _mapper = mapper;
         }
 
-        public void ExecuteWriteCommand(SqlCommand sqlCommand)
+        protected IDbConnection Connection
+        {
+            get { return _connection; }
+        }
+
+        public virtual void ExecuteWriteCommand(SqlCommand sqlCommand)
         {
             using (var dbCommand = _mapper.Map(sqlCommand))
             {
@@ -23,7 +29,7 @@ namespace Coating
             }
         }
 
-        public IEnumerable<IDataRecord> ExecuteReadCommand(SqlCommand sqlCommand)
+        public virtual IEnumerable<IDataRecord> ExecuteReadCommand(SqlCommand sqlCommand)
         {
             using (var dbCommand = _mapper.Map(sqlCommand))
             {
