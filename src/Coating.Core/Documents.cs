@@ -52,6 +52,21 @@ namespace Coating
                 });
         }
 
+        public void Update(object document)
+        {
+            var documentId = _idService.GetIdFrom(document);
+            var documentType = _typeService.GetTypeNameFrom(document);
+            var id = string.Format("{0}/{1}", documentType, documentId);
+
+            var data = _serializationService.Serialize(document);
+            _databaseFacade.Update(new DataDocument
+                {
+                    Id = id,
+                    Type = documentType,
+                    Data = data
+                });
+        }
+
         public T Retrieve<T>(string id) where T : class, new()
         {
             var dataDocument = _databaseFacade.SelectById(id);
