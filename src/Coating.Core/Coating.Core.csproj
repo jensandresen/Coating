@@ -55,6 +55,7 @@
     <Compile Include="ICommandMapper.cs" />
     <Compile Include="IDatabaseFacade.cs" />
     <Compile Include="IdMap.cs" />
+    <Compile Include="IDocuments.cs" />
     <Compile Include="IIdMap.cs" />
     <Compile Include="IIdService.cs" />
     <Compile Include="ISerializationService.cs" />

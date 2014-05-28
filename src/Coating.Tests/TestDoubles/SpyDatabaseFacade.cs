@@ -26,5 +26,10 @@ namespace Coating.Tests.TestDoubles
         {
             throw new System.NotImplementedException();
         }
+
+        public bool Contains(string id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

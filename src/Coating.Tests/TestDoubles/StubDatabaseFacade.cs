@@ -38,5 +38,10 @@ namespace Coating.Tests.TestDoubles
 
             return _selectByTypeResult;
         }
+
+        public bool Contains(string id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Coating
 {
-    public class Documents
+    public class Documents : IDocuments
     {
         private readonly IDatabaseFacade _databaseFacade;
         private readonly IIdService _idService;
@@ -65,6 +65,29 @@ namespace Coating
                     Type = documentType,
                     Data = data
                 });
+        }
+
+        public bool Contains(object document)
+        {
+            var documentId = _idService.GetIdFrom(document);
+            var documentType = _typeService.GetTypeNameFrom(document);
+            var id = string.Format("{0}/{1}", documentType, documentId);
+
+            return _databaseFacade.Contains(id);
+        }
+
+        public void Store(object document)
+        {
+            var alreadyExists = Contains(document);
+
+            if (alreadyExists)
+            {
+                Update(document);
+            }
+            else
+            {
+                Save(document);
+            }
         }
 
         public T Retrieve<T>(string id) where T : class, new()

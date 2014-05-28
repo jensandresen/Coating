@@ -61,5 +61,10 @@ namespace Coating
                 };
             }
         }
+
+        public bool Contains(string id)
+        {
+            return SelectById(id) != null;
+        }
     }
 }

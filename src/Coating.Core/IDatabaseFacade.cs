@@ -8,5 +8,6 @@ namespace Coating
         void Update(DataDocument document);
         DataDocument SelectById(string id);
         IEnumerable<DataDocument> SelectByType(string typeName);
+        bool Contains(string id);
     }
 }
