@@ -9,5 +9,6 @@ namespace Coating
         DataDocument SelectById(string id);
         IEnumerable<DataDocument> SelectByType(string typeName);
         bool Contains(string id);
+        void Delete(string id);
     }
 }

@@ -28,5 +28,10 @@ namespace Coating.Tests.TestDoubles
         {
             throw new System.NotImplementedException();
         }
+
+        public virtual void Delete(string id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

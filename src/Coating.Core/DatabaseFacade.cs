@@ -66,5 +66,11 @@ namespace Coating
         {
             return SelectById(id) != null;
         }
+
+        public void Delete(string id)
+        {
+            var cmd = _commandFactory.CreateDeleteCommandFor(id);
+            _commandExecutor.ExecuteWriteCommand(cmd);
+        }
     }
 }

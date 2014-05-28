@@ -112,5 +112,14 @@ namespace Coating
                 yield return _serializationService.Deserialize<T>(document.Data);
             }
         }
+
+        public void Delete(object document)
+        {
+            var documentId = _idService.GetIdFrom(document);
+            var documentType = _typeService.GetTypeNameFrom(document);
+            var id = string.Format("{0}/{1}", documentType, documentId);
+
+            _databaseFacade.Delete(id);
+        }
     }
 }

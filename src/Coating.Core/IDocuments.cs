@@ -7,5 +7,6 @@ namespace Coating
         void Store(object document);
         T Retrieve<T>(string id) where T : class, new();
         IEnumerable<T> RetrieveAll<T>() where T : class, new();
+        void Delete(object document);
     }
 }
