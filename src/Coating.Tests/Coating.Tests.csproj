@@ -54,6 +54,7 @@
     <Compile Include="TestCommandFactory.cs" />
     <Compile Include="TestAutoIdService.cs" />
     <Compile Include="TestCompositeIdService.cs" />
+    <Compile Include="TestConstruction.cs" />
     <Compile Include="TestDatabaseFacade.cs" />
     <Compile Include="TestDataRecordExtensions.cs" />
     <Compile Include="TestDefaultCommandExecutor.cs" />
