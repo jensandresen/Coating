@@ -49,6 +49,7 @@
     <Compile Include="Builders\DefaultCommandExecutorBuilder.cs" />
     <Compile Include="Builders\DocumentsBuilder.cs" />
     <Compile Include="Builders\SqlCommandBuilder.cs" />
+    <Compile Include="Builders\TransactionalCommandExecutorBuilder.cs" />
     <Compile Include="DbCommandAssert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCommandFactory.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="TestDoubles\StubCommandMapper.cs" />
     <Compile Include="TestDoubles\StubDatabaseFacade.cs" />
     <Compile Include="TestDoubles\StubDataRecord.cs" />
+    <Compile Include="TestDoubles\StubDbConnection.cs" />
     <Compile Include="TestDoubles\StubIdService.cs" />
     <Compile Include="TestDoubles\StubSerializationService.cs" />
     <Compile Include="TestDoubles\StubTypeService.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="TestMappedIdService.cs" />
     <Compile Include="TestSqlCommand.cs" />
     <Compile Include="TestSqlCommandParameter.cs" />
+    <Compile Include="TestTransactionalCommandExecutor.cs" />
     <Compile Include="TestTypeService.cs" />
   </ItemGroup>
   <ItemGroup>
