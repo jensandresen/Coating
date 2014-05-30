@@ -9,13 +9,16 @@ namespace Coating
 
         }
 
-        public override void ExecuteWriteCommand(SqlCommand sqlCommand)
+        protected override void ExecuteWriteCommand(IDbCommand dbCommand)
         {
             using (var transaction = Connection.BeginTransaction())
             {
                 try
                 {
-                    base.ExecuteWriteCommand(sqlCommand);
+                    dbCommand.Connection = Connection;
+                    dbCommand.Transaction = transaction;
+                    dbCommand.ExecuteNonQuery();
+
                     transaction.Commit();
                 }
                 catch

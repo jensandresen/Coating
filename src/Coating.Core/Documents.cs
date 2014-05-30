@@ -67,7 +67,7 @@ namespace Coating
                 });
         }
 
-        public bool Contains(object document)
+        public bool Contains<T>(T document) where T : class 
         {
             var documentId = _idService.GetIdFrom(document);
             var documentType = _typeService.GetTypeNameFrom(document);
@@ -76,7 +76,7 @@ namespace Coating
             return _databaseFacade.Contains(id);
         }
 
-        public void Store(object document)
+        public void Store<T>(T document) where T : class
         {
             var alreadyExists = Contains(document);
 

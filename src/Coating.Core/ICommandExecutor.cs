@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Data;
 
 namespace Coating
@@ -6,6 +6,6 @@ namespace Coating
     public interface ICommandExecutor
     {
         void ExecuteWriteCommand(SqlCommand sqlCommand);
-        IEnumerable<IDataRecord> ExecuteReadCommand(SqlCommand sqlCommand);
+        void ExecuteReadCommand(SqlCommand sqlCommand, Action<IDataRecord> callback);
     }
 }

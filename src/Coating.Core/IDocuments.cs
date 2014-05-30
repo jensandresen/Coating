@@ -4,7 +4,7 @@ namespace Coating
 {
     public interface IDocuments
     {
-        void Store(object document);
+        void Store<T>(T document) where T : class;
         T Retrieve<T>(string id) where T : class, new();
         IEnumerable<T> RetrieveAll<T>() where T : class, new();
         void Delete(object document);

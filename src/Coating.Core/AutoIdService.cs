@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Reflection;
+
 namespace Coating
 {
     public class AutoIdService : IIdService
@@ -26,7 +30,7 @@ namespace Coating
                 return null;
             }
 
-            var idProperty = typeof(T).GetProperty(_propertyName);
+            var idProperty = o.GetType().GetProperty(_propertyName);
             var value = idProperty.GetValue(o, null);
 
             if (value == null)

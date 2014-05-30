@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
 
 namespace Coating
@@ -24,20 +23,27 @@ namespace Coating
         {
             using (var dbCommand = _mapper.Map(sqlCommand))
             {
-                dbCommand.Connection = _connection;
-                dbCommand.ExecuteNonQuery();
+                ExecuteWriteCommand(dbCommand);
             }
         }
 
-        public virtual IEnumerable<IDataRecord> ExecuteReadCommand(SqlCommand sqlCommand)
+        protected virtual void ExecuteWriteCommand(IDbCommand dbCommand)
+        {
+            dbCommand.Connection = Connection;
+            dbCommand.ExecuteNonQuery();
+        }
+
+        public virtual void ExecuteReadCommand(SqlCommand sqlCommand, Action<IDataRecord> callback)
         {
             using (var dbCommand = _mapper.Map(sqlCommand))
             {
+                dbCommand.Connection = _connection;
+
                 using (var reader = dbCommand.ExecuteReader())
                 {
                     while (reader != null && reader.Read())
                     {
-                        yield return reader;
+                        callback(reader);
                     }
                 }
             }

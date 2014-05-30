@@ -7,11 +7,15 @@ namespace Coating.Tests
     [TestFixture]
     public class TestConstruction
     {
+        private const string ConnectionString = "Server=.;Database=Coating;Trusted_Connection=True;";
+
         [Test]
         public void METHOD_NAME()
         {
-            using (IDbConnection connection = new SqlConnection("connection string"))
+            using (IDbConnection connection = new SqlConnection(ConnectionString))
             {
+                connection.Open();
+
                 ICommandFactory commandFactory = new CommandFactory("Data");
                 ICommandMapper mapper = new DefaultCommandMapper();
                 ICommandExecutor commandExecutor = new TransactionalCommandExecutor(connection, mapper);
@@ -24,7 +28,7 @@ namespace Coating.Tests
 
                 documents.Store(new Person
                     {
-                        Id = 1,
+                        Id = "1",
                         Name = "John Doe",
                         Age = 16
                     });
@@ -33,7 +37,7 @@ namespace Coating.Tests
 
         private class Person
         {
-            public int Id { get; set; }
+            public string Id { get; set; }
             public string Name { get; set; }
             public int Age { get; set; }
         }

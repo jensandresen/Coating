@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace Coating
@@ -28,38 +29,32 @@ namespace Coating
 
         public DataDocument SelectById(string id)
         {
+            var results = new LinkedList<DataDocument>();
+
             var cmd = _commandFactory.CreateSelectByIdCommandFor(id);
-            var records = _commandExecutor.ExecuteReadCommand(cmd);
-
-            var found = records.SingleOrDefault();
-
-            if (found == null)
-            {
-                return null;
-            }
-
-            return new DataDocument
+            _commandExecutor.ExecuteReadCommand(cmd, r => results.AddLast(new DataDocument
                 {
-                    Id = found.GetString("Id"),
-                    Data = found.GetString("Data"),
-                    Type = found.GetString("Type"),
-                };
+                    Id = r.GetString("Id"),
+                    Data = r.GetString("Data"),
+                    Type = r.GetString("Type"),
+                }));
+
+            return results.SingleOrDefault();
         }
 
         public IEnumerable<DataDocument> SelectByType(string typeName)
         {
-            var cmd = _commandFactory.CreateSelectByTypeCommandFor(typeName);
-            var records = _commandExecutor.ExecuteReadCommand(cmd);
+            var results = new LinkedList<DataDocument>();
 
-            foreach (var record in records)
+            var cmd = _commandFactory.CreateSelectByTypeCommandFor(typeName);
+            _commandExecutor.ExecuteReadCommand(cmd, r => results.AddLast(new DataDocument
             {
-                yield return new DataDocument
-                {
-                    Id = record.GetString("Id"),
-                    Data = record.GetString("Data"),
-                    Type = record.GetString("Type"),
-                };
-            }
+                Id = r.GetString("Id"),
+                Data = r.GetString("Data"),
+                Type = r.GetString("Type"),
+            }));
+
+            return results;
         }
 
         public bool Contains(string id)
