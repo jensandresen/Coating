@@ -92,7 +92,10 @@ namespace Coating
 
         public T Retrieve<T>(string id) where T : class, new()
         {
-            var dataDocument = _databaseFacade.SelectById(id);
+            var documentType = _typeService.GetTypeNameFrom<T>();
+            var dataDocumentId = string.Format("{0}/{1}", documentType, id);
+
+            var dataDocument = _databaseFacade.SelectById(dataDocumentId);  
 
             if (dataDocument == null)
             {
