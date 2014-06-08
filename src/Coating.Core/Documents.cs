@@ -116,13 +116,12 @@ namespace Coating
             }
         }
 
-        public void Delete(object document)
+        public void Delete<T>(string id) where T : class
         {
-            var documentId = _idService.GetIdFrom(document);
-            var documentType = _typeService.GetTypeNameFrom(document);
-            var id = string.Format("{0}/{1}", documentType, documentId);
+            var documentType = _typeService.GetTypeNameFrom<T>();
+            var documentId = string.Format("{0}/{1}", documentType, id);
 
-            _databaseFacade.Delete(id);
+            _databaseFacade.Delete(documentId);
         }
     }
 }
