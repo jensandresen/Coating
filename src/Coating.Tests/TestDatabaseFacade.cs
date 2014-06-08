@@ -1,4 +1,6 @@
-﻿using Coating.Tests.Builders;
+﻿using System;
+using System.Data;
+using Coating.Tests.Builders;
 using Coating.Tests.TestDoubles;
 using Moq;
 using NUnit.Framework;
@@ -86,6 +88,55 @@ namespace Coating.Tests
             mock.Verify(x => x.ExecuteWriteCommand(dummyCommand));
         }
 
+        [Test]
+        public void executes_select_by_id_command()
+        {
+            var mock = new Mock<ICommandExecutor>();
 
+            var dummyCommand = new SqlCommandBuilder().Build();
+
+            var sut = new DatabaseFacadeBuilder()
+                .WithCommandFactory(new StubCommandFactory(selectById: dummyCommand))
+                .WithExecutor(mock.Object)
+                .Build();
+
+            sut.SelectById("dummy id");
+
+            mock.Verify(x => x.ExecuteReadCommand(dummyCommand, It.IsAny<Action<IDataRecord>>()));
+        }
+
+        [Test]
+        public void executes_select_by_type_command()
+        {
+            var mock = new Mock<ICommandExecutor>();
+
+            var dummyCommand = new SqlCommandBuilder().Build();
+
+            var sut = new DatabaseFacadeBuilder()
+                .WithCommandFactory(new StubCommandFactory(selectByType: dummyCommand))
+                .WithExecutor(mock.Object)
+                .Build();
+
+            sut.SelectByType("dummy type name");
+
+            mock.Verify(x => x.ExecuteReadCommand(dummyCommand, It.IsAny<Action<IDataRecord>>()));
+        }
+
+        [Test]
+        public void executes_delete_command()
+        {
+            var mock = new Mock<ICommandExecutor>();
+
+            var dummyCommand = new SqlCommandBuilder().Build();
+
+            var sut = new DatabaseFacadeBuilder()
+                .WithCommandFactory(new StubCommandFactory(delete: dummyCommand))
+                .WithExecutor(mock.Object)
+                .Build();
+
+            sut.Delete("dummy id");
+
+            mock.Verify(x => x.ExecuteWriteCommand(dummyCommand));
+        }
     }
 }

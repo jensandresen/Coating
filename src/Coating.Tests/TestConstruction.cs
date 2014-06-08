@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace Coating.Tests
 {
-    [TestFixture]
+    [TestFixture, Ignore]
     public class TestConstruction
     {
         private const string ConnectionString = "Server=.;Database=Coating;Trusted_Connection=True;";
