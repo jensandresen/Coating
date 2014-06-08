@@ -260,5 +260,25 @@ namespace Coating.Tests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestCase("Foo", "1", "Foo/1")]
+        [TestCase("Bar", "2", "Bar/2")]
+        [TestCase("Foo", "Bar", "Foo/Bar")]
+        public void delete_uses_expected_id(string documentTypeName, string documentId, string expectedId)
+        {
+            var mockDatabaseFacade = new Mock<IDatabaseFacade>();
+
+            var sut = new DocumentsBuilder()
+                .WithDatabaseFacade(mockDatabaseFacade.Object)
+                .WithTypeService(new StubTypeService(documentTypeName))
+                .WithIdService(new StubIdService(documentId))
+                .Build();
+
+            sut.Delete<object>(documentId);
+
+            mockDatabaseFacade.Verify(x => x.Delete(expectedId));
+        }
+
+
     }
 }
