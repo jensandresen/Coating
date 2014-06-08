@@ -7,11 +7,13 @@ namespace Coating.Tests.TestDoubles
     {
         private readonly DataDocument _selectByIdResult;
         private readonly IEnumerable<DataDocument> _selectByTypeResult;
+        private readonly bool _containsResult;
 
-        public StubDatabaseFacade(DataDocument selectByIdResult = null, IEnumerable<DataDocument> selectByTypeResult = null)
+        public StubDatabaseFacade(DataDocument selectByIdResult = null, IEnumerable<DataDocument> selectByTypeResult = null, bool containsResult = true)
         {
             _selectByIdResult = selectByIdResult;
             _selectByTypeResult = selectByTypeResult;
+            _containsResult = containsResult;
         }
 
         public override DataDocument SelectById(string id)
@@ -27,6 +29,11 @@ namespace Coating.Tests.TestDoubles
             }
 
             return _selectByTypeResult;
+        }
+
+        public override bool Contains(string id)
+        {
+            return _containsResult;
         }
     }
 }

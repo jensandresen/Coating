@@ -229,5 +229,36 @@ namespace Coating.Tests
 
             mockSerializationService.Verify(x => x.Deserialize<object>(It.IsAny<string>()), Times.Exactly(3));
         }
+
+        [TestCase("Foo", "1", "Foo/1")]
+        [TestCase("Bar", "2", "Bar/2")]
+        [TestCase("Foo", "Bar", "Foo/Bar")]
+        public void contains_uses_expected_id(string documentTypeName, string documentId, string expectedId)
+        {
+            var mockDatabaseFacade = new Mock<IDatabaseFacade>();
+
+            var sut = new DocumentsBuilder()
+                .WithDatabaseFacade(mockDatabaseFacade.Object)
+                .WithTypeService(new StubTypeService(documentTypeName))
+                .WithIdService(new StubIdService(documentId))
+                .Build();
+
+            sut.Contains(new object());
+
+            mockDatabaseFacade.Verify(x => x.Contains(expectedId));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void contains_returns_the_same_as_database_facade(bool expected)
+        {
+            var sut = new DocumentsBuilder()
+                .WithDatabaseFacade(new StubDatabaseFacade(containsResult: expected))
+                .Build();
+
+            var actual = sut.Contains(new object());
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
