@@ -279,6 +279,38 @@ namespace Coating.Tests
             mockDatabaseFacade.Verify(x => x.Delete(expectedId));
         }
 
+        [Test]
+        public void store_only_updates_document_if_it_already_exists()
+        {
+            var mockDatabaseFacade = new Mock<IDatabaseFacade>();
+            mockDatabaseFacade
+                .Setup(x => x.Contains(It.IsAny<string>()))
+                .Returns(true);
 
+            var sut = new DocumentsBuilder()
+                .WithDatabaseFacade(mockDatabaseFacade.Object)
+                .Build();
+
+            sut.Store(new object());
+
+            mockDatabaseFacade.Verify(x => x.Update(It.IsAny<DataDocument>()));
+        }
+
+        [Test]
+        public void store_inserts_document_if_it_does_not_already_exists()
+        {
+            var mockDatabaseFacade = new Mock<IDatabaseFacade>();
+            mockDatabaseFacade
+                .Setup(x => x.Contains(It.IsAny<string>()))
+                .Returns(false);
+
+            var sut = new DocumentsBuilder()
+                .WithDatabaseFacade(mockDatabaseFacade.Object)
+                .Build();
+
+            sut.Store(new object());
+
+            mockDatabaseFacade.Verify(x => x.Insert(It.IsAny<DataDocument>()));
+        }
     }
 }
