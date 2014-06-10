@@ -1,22 +1,28 @@
+using System;
+
 namespace Coating
 {
     public class ConventionBasedIdService : IIdService
     {
-        private readonly string _propertyName;
+        private readonly Func<Type, string> _nameConvention;
 
         public ConventionBasedIdService() : this("Id")
         {
             
         }
 
-        public ConventionBasedIdService(string propertyName)
+        public ConventionBasedIdService(string propertyName) : this(type => propertyName)
         {
-            _propertyName = propertyName;
         }
 
-        public string PropertyName
+        public ConventionBasedIdService(Func<Type, string> nameConvention)
         {
-            get { return _propertyName; }
+            _nameConvention = nameConvention;
+        }
+
+        public Func<Type, string> NameConvention
+        {
+            get { return _nameConvention; }
         }
 
         public string GetIdFrom<T>(T o) where T : class
@@ -26,7 +32,10 @@ namespace Coating
                 return null;
             }
 
-            var idProperty = o.GetType().GetProperty(_propertyName);
+            var type = o.GetType();
+            var propertyName = _nameConvention(type);
+
+            var idProperty = type.GetProperty(propertyName);
             var value = idProperty.GetValue(o, null);
 
             if (value == null)

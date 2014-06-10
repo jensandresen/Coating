@@ -9,7 +9,7 @@ namespace Coating.Tests
         public void returns_expected_default_id_property_name()
         {
             var sut = new ConventionBasedIdService();
-            Assert.AreEqual("Id", sut.PropertyName);
+            Assert.AreEqual("Id", sut.NameConvention(typeof(object)));
         }
 
         [TestCase("Id")]
@@ -20,7 +20,7 @@ namespace Coating.Tests
         public void returns_expected_id_property_name_when_set(string expectedPropertyName)
         {
             var sut = new ConventionBasedIdService(expectedPropertyName);
-            Assert.AreEqual(expectedPropertyName, sut.PropertyName);
+            Assert.AreEqual(expectedPropertyName, sut.NameConvention(typeof(object)));
         }
 
         [TestCase("1")]
@@ -83,10 +83,25 @@ namespace Coating.Tests
             Assert.IsInstanceOf<IIdService>(sut);
         }
 
+        [Test]
+        public void returns_id_from_type_based_convention()
+        {
+            var sut = new ConventionBasedIdService(x => x.Name + "Id");
+            var actual = sut.GetIdFrom<Foo>(new Foo
+                {
+                    Id = "1",
+                    Key = "2",
+                    FooId = "3"
+                });
+
+            Assert.AreEqual("3", actual);
+        }
+
         private class Foo
         {
             public string Id { get; set; }
             public string Key { get; set; }
+            public string FooId { get; set; }
         }
     }
 }
