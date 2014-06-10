@@ -6,7 +6,16 @@ namespace Coating
     {
         public IDbCommand Map(SqlCommand sqlCommand)
         {
-            return sqlCommand.ToAdoCommand();
+            var cmd = new System.Data.SqlClient.SqlCommand();
+            cmd.CommandText = sqlCommand.Sql;
+            cmd.CommandType = CommandType.Text;
+
+            foreach (var p in sqlCommand.Parameters)
+            {
+                cmd.Parameters.AddWithValue(p.Name, p.Value);
+            }
+
+            return cmd;
         }
     }
 }

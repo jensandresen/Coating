@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using Coating.Tests.Builders;
 using Coating.Tests.TestDoubles;
 using Moq;
@@ -37,7 +38,7 @@ namespace Coating.Tests
         }
 
         [Test]
-        public void disposes_ado_command()
+        public void disposes_ado_command_on_write()
         {
             var mockAdoCommand = new Mock<IDbCommand>();
 
@@ -52,7 +53,7 @@ namespace Coating.Tests
         }
 
         [Test]
-        public void assigns_connection_before_executing_the_ado_command()
+        public void assigns_connection_before_executing_the_write_command()
         {
             var dummyDbConnection = new Mock<IDbConnection>().Object;
             var spyDbCommand = new SpyDbCommand();
@@ -82,5 +83,59 @@ namespace Coating.Tests
 
             mockCommand.Verify(x => x.ExecuteNonQuery());
         }
+
+        [Test]
+        public void executes_reader()
+        {
+            var mockCommand = new Mock<IDbCommand>();
+
+            var sut = new DefaultCommandExecutorBuilder()
+                .WithMapper(new StubCommandMapper(mockCommand.Object))
+                .Build();
+
+            var dummyCommand = new SqlCommandBuilder().Build();
+            var dummyCallback = new Action<IDataRecord>(record => { });
+            
+            sut.ExecuteReadCommand(dummyCommand, dummyCallback);
+
+            mockCommand.Verify(x => x.ExecuteReader());
+        }
+
+        [Test]
+        public void assigns_connection_before_executing_read_command()
+        {
+            var dummyDbConnection = new Mock<IDbConnection>().Object;
+            var spyDbCommand = new SpyDbCommand();
+
+            var sut = new DefaultCommandExecutorBuilder()
+                .WithDbConnection(dummyDbConnection)
+                .WithMapper(new StubCommandMapper(spyDbCommand))
+                .Build();
+
+            var dummyCommand = new SqlCommandBuilder().Build();
+            var dummyCallback = new Action<IDataRecord>(record => { });
+
+            sut.ExecuteReadCommand(dummyCommand, dummyCallback);
+
+            Assert.AreSame(dummyDbConnection, spyDbCommand.assignedConnection);
+        }
+
+        [Test]
+        public void disposes_ado_command_on_read()
+        {
+            var mockAdoCommand = new Mock<IDbCommand>();
+
+            var sut = new DefaultCommandExecutorBuilder()
+                .WithMapper(new StubCommandMapper(mockAdoCommand.Object))
+                .Build();
+
+            var dummyCommand = new SqlCommandBuilder().Build();
+            var dummyCallback = new Action<IDataRecord>(record => { });
+
+            sut.ExecuteReadCommand(dummyCommand, dummyCallback);
+
+            mockAdoCommand.Verify(x => x.Dispose());
+        }
+
     }
 }

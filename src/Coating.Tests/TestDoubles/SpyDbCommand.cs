@@ -33,7 +33,7 @@ namespace Coating.Tests.TestDoubles
 
         public IDataReader ExecuteReader()
         {
-            throw new System.NotImplementedException();
+            return null;
         }
 
         public IDataReader ExecuteReader(CommandBehavior behavior)

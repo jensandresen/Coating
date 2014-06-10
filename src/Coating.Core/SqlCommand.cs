@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 
 namespace Coating
@@ -10,6 +9,11 @@ namespace Coating
         
         public string Sql { get; set; }
 
+        public IEnumerable<SqlCommandParameter> Parameters
+        {
+            get { return _parameters; }
+        }
+
         public void AddParameter(string name, object value)
         {
             _parameters.Add(new SqlCommandParameter
@@ -17,20 +21,6 @@ namespace Coating
                     Name = name,
                     Value = value
                 });
-        }
-
-        public virtual IDbCommand ToAdoCommand()
-        {
-            var cmd = new System.Data.SqlClient.SqlCommand();
-            cmd.CommandText = Sql;
-            cmd.CommandType = CommandType.Text;
-
-            foreach (var p in _parameters)
-            {
-                cmd.Parameters.AddWithValue(p.Name, p.Value);
-            }
-
-            return cmd;
         }
 
         protected bool Equals(SqlCommand other)

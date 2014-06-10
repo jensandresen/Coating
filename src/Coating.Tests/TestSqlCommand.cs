@@ -1,5 +1,4 @@
-﻿using System.Data;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Coating.Tests
 {
@@ -49,25 +48,6 @@ namespace Coating.Tests
         }
 
         [Test]
-        public void creates_expected_ado_insert_command()
-        {
-            var sut = new CommandFactory("Data");
-
-            var actual = sut
-                .CreateInsertCommandFor("1", "the data", "the type")
-                .ToAdoCommand();
-
-            var expected = new System.Data.SqlClient.SqlCommand();
-            expected.CommandText = "insert into Data(Id, Data, Type) values(@Id, @Data, @Type)";
-            expected.CommandType = CommandType.Text;
-            expected.Parameters.AddWithValue("@Id", "1");
-            expected.Parameters.AddWithValue("@Data", "the data");
-            expected.Parameters.AddWithValue("@Type", "the type");
-
-            DbCommandAssert.AreEqual(expected, actual);
-        }
-
-        [Test]
         public void returns_expected_on_to_string()
         {
             var sut = new SqlCommand();
@@ -77,6 +57,44 @@ namespace Coating.Tests
             sut.AddParameter("@Type", "the type");
 
             Assert.AreEqual("insert into Data(Id, Data, Type) values('1', 'the data', 'the type')", sut.ToString());
+        }
+
+        [Test]
+        public void parameters_is_empty_by_default()
+        {
+            var sut = new SqlCommand();
+            CollectionAssert.IsEmpty(sut.Parameters);
+        }
+
+        [Test]
+        public void parameters_returns_expected_when_adding_single_parameter()
+        {
+            var stubParameter = new SqlCommandParameter();
+            stubParameter.Name = "Foo";
+            stubParameter.Value = 1;
+
+            var expected = new[] {stubParameter};
+
+            var sut = new SqlCommand();
+            sut.AddParameter("Foo", 1);
+
+            CollectionAssert.AreEquivalent(expected, sut.Parameters);
+        }
+
+        [Test]
+        public void parameters_returns_expected_when_adding_multiple_parameters()
+        {
+            var expected = new[]
+                {
+                    new SqlCommandParameter {Name = "Foo", Value = 1},
+                    new SqlCommandParameter {Name = "Bar", Value = 2},
+                };
+
+            var sut = new SqlCommand();
+            sut.AddParameter("Foo", 1);
+            sut.AddParameter("Bar", 2);
+
+            CollectionAssert.AreEquivalent(expected, sut.Parameters);
         }
     }
 }

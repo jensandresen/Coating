@@ -59,6 +59,7 @@
     <Compile Include="TestDatabaseFacade.cs" />
     <Compile Include="TestDataRecordExtensions.cs" />
     <Compile Include="TestDefaultCommandExecutor.cs" />
+    <Compile Include="TestDefaultCommandMapper.cs" />
     <Compile Include="TestDocuments.cs" />
     <Compile Include="TestDoubles\AbstractDatabaseFacade.cs" />
     <Compile Include="TestDoubles\SpyDatabaseFacade.cs" />
