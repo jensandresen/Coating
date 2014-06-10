@@ -62,6 +62,7 @@
     <Compile Include="TestDefaultCommandMapper.cs" />
     <Compile Include="TestDocuments.cs" />
     <Compile Include="TestDoubles\AbstractDatabaseFacade.cs" />
+    <Compile Include="TestDoubles\FakeDataReader.cs" />
     <Compile Include="TestDoubles\SpyDatabaseFacade.cs" />
     <Compile Include="TestDoubles\SpyDbCommand.cs" />
     <Compile Include="TestDoubles\SpyIdService.cs" />

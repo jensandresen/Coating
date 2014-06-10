@@ -137,5 +137,119 @@ namespace Coating.Tests
             mockAdoCommand.Verify(x => x.Dispose());
         }
 
+        [Test]
+        public void executes_callback_for_single_result()
+        {
+            var dummyDataReader = new FakeDataReader();
+            
+            var stubCommand = new Mock<IDbCommand>();
+            stubCommand
+                .Setup(x => x.ExecuteReader())
+                .Returns(dummyDataReader);
+
+            var sut = new DefaultCommandExecutorBuilder()
+                .WithMapper(new StubCommandMapper(stubCommand.Object))
+                .Build();
+
+            bool wasCallbackInvoked = false;
+            IDataRecord returnedRecord = null;
+
+            var spyCallback = new Action<IDataRecord>(record =>
+                {
+                    wasCallbackInvoked = true;
+                    returnedRecord = record;
+                });
+
+            var dummyCommand = new SqlCommandBuilder().Build();
+            sut.ExecuteReadCommand(dummyCommand, spyCallback);
+
+            Assert.IsTrue(wasCallbackInvoked);
+            Assert.AreSame(dummyDataReader, returnedRecord);
+        }
+
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(100)]
+        public void executes_callback_for_each_result_found(int expectedCallbackCount)
+        {
+            var dummyDataReader = new FakeDataReader(resultRowCount: expectedCallbackCount);
+            
+            var stubCommand = new Mock<IDbCommand>();
+            stubCommand
+                .Setup(x => x.ExecuteReader())
+                .Returns(dummyDataReader);
+
+            var sut = new DefaultCommandExecutorBuilder()
+                .WithMapper(new StubCommandMapper(stubCommand.Object))
+                .Build();
+
+            var callbackCount = 0;
+
+            var spyCallback = new Action<IDataRecord>(record =>
+                {
+                    callbackCount++;
+                });
+
+            var dummyCommand = new SqlCommandBuilder().Build();
+            sut.ExecuteReadCommand(dummyCommand, spyCallback);
+
+            Assert.AreEqual(expectedCallbackCount, callbackCount);
+        }
+
+        [Test]
+        public void does_not_execute_callback_if_nothing_was_found()
+        {
+            var dummyDataReader = new FakeDataReader(resultRowCount: 0);
+
+            var stubCommand = new Mock<IDbCommand>();
+            stubCommand
+                .Setup(x => x.ExecuteReader())
+                .Returns(dummyDataReader);
+
+            var sut = new DefaultCommandExecutorBuilder()
+                .WithMapper(new StubCommandMapper(stubCommand.Object))
+                .Build();
+
+            var wasCallbackInvoked = false;
+
+            var spyCallback = new Action<IDataRecord>(record =>
+            {
+                wasCallbackInvoked = true;
+            });
+
+            var dummyCommand = new SqlCommandBuilder().Build();
+            sut.ExecuteReadCommand(dummyCommand, spyCallback);
+
+            Assert.IsFalse(wasCallbackInvoked);
+        }
+
+        [Test]
+        public void does_not_execute_callback_if_null_was_returned()
+        {
+            IDataReader nullDataReader = null;
+
+            var stubCommand = new Mock<IDbCommand>();
+            stubCommand
+                .Setup(x => x.ExecuteReader())
+                .Returns(nullDataReader);
+
+            var sut = new DefaultCommandExecutorBuilder()
+                .WithMapper(new StubCommandMapper(stubCommand.Object))
+                .Build();
+
+            var wasCallbackInvoked = false;
+
+            var spyCallback = new Action<IDataRecord>(record =>
+            {
+                wasCallbackInvoked = true;
+            });
+
+            var dummyCommand = new SqlCommandBuilder().Build();
+            sut.ExecuteReadCommand(dummyCommand, spyCallback);
+
+            Assert.IsFalse(wasCallbackInvoked);
+        }
+
     }
 }
