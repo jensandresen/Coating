@@ -138,5 +138,28 @@ namespace Coating.Tests
 
             mock.Verify(x => x.ExecuteWriteCommand(dummyCommand));
         }
+
+        [Test]
+        public void contains_returns_expected_when_nothing_was_found()
+        {
+            var sut = new DatabaseFacadeBuilder().Build();
+            var result = sut.Contains("non-existing-id");
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void contains_returns_expected_when_a_document_was_found()
+        {
+            var dummyDataRecord = new Mock<IDataRecord>().Object;
+
+            var sut = new DatabaseFacadeBuilder()
+                .WithExecutor(new StubCommandExecutor(readResult: dummyDataRecord))
+                .Build();
+
+            var result = sut.Contains("dummy id");
+
+            Assert.IsTrue(result);
+        }
     }
 }

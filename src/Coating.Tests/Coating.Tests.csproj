@@ -66,6 +66,7 @@
     <Compile Include="TestDoubles\SpyDatabaseFacade.cs" />
     <Compile Include="TestDoubles\SpyDbCommand.cs" />
     <Compile Include="TestDoubles\SpyIdService.cs" />
+    <Compile Include="TestDoubles\StubCommandExecutor.cs" />
     <Compile Include="TestDoubles\StubCommandFactory.cs" />
     <Compile Include="TestDoubles\StubCommandMapper.cs" />
     <Compile Include="TestDoubles\StubDatabaseFacade.cs" />
