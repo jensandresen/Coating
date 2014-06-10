@@ -21,7 +21,7 @@ namespace Coating.Tests
                 ICommandExecutor commandExecutor = new TransactionalCommandExecutor(connection, mapper);
                 IDatabaseFacade databaseFacade = new DatabaseFacade(commandFactory, commandExecutor);
 
-                IIdService idService = new AutoIdService("Id");
+                IIdService idService = new ConventionBasedIdService("Id");
                 ITypeService typeService = new TypeService();
                 ISerializationService serializationService = new JsonSerializationService();
                 IDocuments documents = new Documents(databaseFacade, idService, typeService, serializationService);

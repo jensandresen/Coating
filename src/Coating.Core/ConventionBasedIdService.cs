@@ -1,19 +1,15 @@
-using System;
-using System.Linq;
-using System.Reflection;
-
 namespace Coating
 {
-    public class AutoIdService : IIdService
+    public class ConventionBasedIdService : IIdService
     {
         private readonly string _propertyName;
 
-        public AutoIdService() : this("Id")
+        public ConventionBasedIdService() : this("Id")
         {
             
         }
 
-        public AutoIdService(string propertyName)
+        public ConventionBasedIdService(string propertyName)
         {
             _propertyName = propertyName;
         }

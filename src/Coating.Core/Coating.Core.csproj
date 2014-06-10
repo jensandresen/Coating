@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoIdService.cs" />
+    <Compile Include="ConventionBasedIdService.cs" />
     <Compile Include="CommandFactory.cs" />
     <Compile Include="CompositeIdService.cs" />
     <Compile Include="DatabaseFacade.cs" />
