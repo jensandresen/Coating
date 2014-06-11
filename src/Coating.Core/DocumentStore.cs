@@ -2,14 +2,14 @@ using System.Collections.Generic;
 
 namespace Coating
 {
-    public class Documents : IDocuments
+    public class DocumentStore : IDocumentStore
     {
         private readonly IStorageFacade _storageFacade;
         private readonly IIdService _idService;
         private readonly ITypeService _typeService;
         private readonly ISerializationService _serializationService;
 
-        public Documents(IStorageFacade storageFacade, IIdService idService, ITypeService typeService, ISerializationService serializationService)
+        public DocumentStore(IStorageFacade storageFacade, IIdService idService, ITypeService typeService, ISerializationService serializationService)
         {
             _storageFacade = storageFacade;
             _idService = idService;

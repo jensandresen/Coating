@@ -2,14 +2,14 @@
 
 namespace Coating.Tests.Builders
 {
-    public class DocumentsBuilder
+    public class DocumentStoreBuilder
     {
         private IStorageFacade _storageFacade;
         private IIdService _idService;
         private ITypeService _typeService;
         private ISerializationService _serializationService;
 
-        public DocumentsBuilder()
+        public DocumentStoreBuilder()
         {
             _storageFacade = new Mock<IStorageFacade>().Object;
             _idService = new Mock<IIdService>().Object;
@@ -17,33 +17,33 @@ namespace Coating.Tests.Builders
             _serializationService = new Mock<ISerializationService>().Object;
         }
 
-        public DocumentsBuilder WithStorageFacade(IStorageFacade storageFacade)
+        public DocumentStoreBuilder WithStorageFacade(IStorageFacade storageFacade)
         {
             _storageFacade = storageFacade;
             return this;
         }
 
-        public DocumentsBuilder WithIdService(IIdService idService)
+        public DocumentStoreBuilder WithIdService(IIdService idService)
         {
             _idService = idService;
             return this;
         }
 
-        public DocumentsBuilder WithTypeService(ITypeService typeService)
+        public DocumentStoreBuilder WithTypeService(ITypeService typeService)
         {
             _typeService = typeService;
             return this;
         }
 
-        public DocumentsBuilder WithSerializationService(ISerializationService serializationService)
+        public DocumentStoreBuilder WithSerializationService(ISerializationService serializationService)
         {
             _serializationService = serializationService;
             return this;
         }
 
-        public Documents Build()
+        public DocumentStore Build()
         {
-            return new Documents(_storageFacade, _idService, _typeService, _serializationService);
+            return new DocumentStore(_storageFacade, _idService, _typeService, _serializationService);
         }
     }
 }

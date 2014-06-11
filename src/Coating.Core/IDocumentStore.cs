@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Coating
 {
-    public interface IDocuments
+    public interface IDocumentStore
     {
         void Store<T>(T document) where T : class;
         T Retrieve<T>(string id) where T : class, new();

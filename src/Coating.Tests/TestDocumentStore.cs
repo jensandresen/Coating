@@ -7,14 +7,14 @@ using NUnit.Framework;
 namespace Coating.Tests
 {
     [TestFixture]
-    public class TestDocuments
+    public class TestDocumentStore
     {
         [Test]
         public void storage_facade_returns_expected()
         {
             var dummyStorageFacade = new Mock<IStorageFacade>().Object;
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(dummyStorageFacade)
                 .Build();
 
@@ -26,7 +26,7 @@ namespace Coating.Tests
         {
             var dummy = new Mock<IIdService>().Object;
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithIdService(dummy)
                 .Build();
 
@@ -38,7 +38,7 @@ namespace Coating.Tests
         {
             var dummy = new Mock<ITypeService>().Object;
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithTypeService(dummy)
                 .Build();
 
@@ -50,7 +50,7 @@ namespace Coating.Tests
         {
             var dummy = new Mock<ISerializationService>().Object;
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithSerializationService(dummy)
                 .Build();
 
@@ -62,7 +62,7 @@ namespace Coating.Tests
         {
             var mock = new Mock<IStorageFacade>();
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(mock.Object)
                 .Build();
 
@@ -79,7 +79,7 @@ namespace Coating.Tests
         {
             var spyStorageFacade = new SpyStorageFacade();
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithIdService(new StubIdService(documentId))
                 .WithTypeService(new StubTypeService(documentTypeName))
                 .WithStorageFacade(spyStorageFacade)
@@ -99,7 +99,7 @@ namespace Coating.Tests
         {
             var spyStorageFacade = new SpyStorageFacade();
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithTypeService(new StubTypeService(expectedTypeName))
                 .WithStorageFacade(spyStorageFacade)
                 .Build();
@@ -118,7 +118,7 @@ namespace Coating.Tests
         {
             var spyStorageFacade = new SpyStorageFacade();
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithSerializationService(new StubSerializationService(expectedData))
                 .WithStorageFacade(spyStorageFacade)
                 .Build();
@@ -134,7 +134,7 @@ namespace Coating.Tests
         {
             DataDocument nullDataDocument = null;
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(new StubStorageFacade(nullDataDocument))
                 .Build();
 
@@ -153,7 +153,7 @@ namespace Coating.Tests
                     Data = "foo"
                 };
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(new StubStorageFacade(stubDataDocument))
                 .WithSerializationService(mockSerializationService.Object)
                 .Build();
@@ -169,7 +169,7 @@ namespace Coating.Tests
             var expected = new object();
             var dummyDataDocument = new DataDocument();
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithSerializationService(new StubSerializationService(deserializationResult: expected))
                 .WithStorageFacade(new StubStorageFacade(dummyDataDocument))
                 .Build();
@@ -182,7 +182,7 @@ namespace Coating.Tests
         [Test]
         public void retrieveall_returns_empty_list_when_nothing_was_found()
         {
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(new StubStorageFacade(selectByTypeResult: Enumerable.Empty<DataDocument>()))
                 .Build();
 
@@ -200,7 +200,7 @@ namespace Coating.Tests
         {
             var mockStorageFacade = new Mock<IStorageFacade>();
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(mockStorageFacade.Object)
                 .WithTypeService(new StubTypeService(expectedTypeName))
                 .Build();
@@ -215,7 +215,7 @@ namespace Coating.Tests
         {
             var mockSerializationService = new Mock<ISerializationService>();
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithSerializationService(mockSerializationService.Object)
                 .WithStorageFacade(new StubStorageFacade(selectByTypeResult: new[]
                     {
@@ -237,7 +237,7 @@ namespace Coating.Tests
         {
             var mockStorageFacade = new Mock<IStorageFacade>();
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(mockStorageFacade.Object)
                 .WithTypeService(new StubTypeService(documentTypeName))
                 .WithIdService(new StubIdService(documentId))
@@ -252,7 +252,7 @@ namespace Coating.Tests
         [TestCase(false)]
         public void contains_returns_the_same_as_database_facade(bool expected)
         {
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(new StubStorageFacade(containsResult: expected))
                 .Build();
 
@@ -268,7 +268,7 @@ namespace Coating.Tests
         {
             var mockStorageFacade = new Mock<IStorageFacade>();
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(mockStorageFacade.Object)
                 .WithTypeService(new StubTypeService(documentTypeName))
                 .WithIdService(new StubIdService(documentId))
@@ -287,7 +287,7 @@ namespace Coating.Tests
                 .Setup(x => x.Contains(It.IsAny<string>()))
                 .Returns(true);
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(mockStorageFacade.Object)
                 .Build();
 
@@ -304,7 +304,7 @@ namespace Coating.Tests
                 .Setup(x => x.Contains(It.IsAny<string>()))
                 .Returns(false);
 
-            var sut = new DocumentsBuilder()
+            var sut = new DocumentStoreBuilder()
                 .WithStorageFacade(mockStorageFacade.Object)
                 .Build();
 

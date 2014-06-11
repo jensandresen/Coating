@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="Builders\StorageFacadeBuilder.cs" />
     <Compile Include="Builders\DefaultCommandExecutorBuilder.cs" />
-    <Compile Include="Builders\DocumentsBuilder.cs" />
+    <Compile Include="Builders\DocumentStoreBuilder.cs" />
     <Compile Include="Builders\SqlCommandBuilder.cs" />
     <Compile Include="Builders\TransactionalCommandExecutorBuilder.cs" />
     <Compile Include="DbCommandAssert.cs" />
@@ -60,7 +60,7 @@
     <Compile Include="TestDataRecordExtensions.cs" />
     <Compile Include="TestDefaultCommandExecutor.cs" />
     <Compile Include="TestDefaultCommandMapper.cs" />
-    <Compile Include="TestDocuments.cs" />
+    <Compile Include="TestDocumentStore.cs" />
     <Compile Include="TestDoubles\AbstractStorageFacade.cs" />
     <Compile Include="TestDoubles\FakeDataReader.cs" />
     <Compile Include="TestDoubles\SpyStorageFacade.cs" />

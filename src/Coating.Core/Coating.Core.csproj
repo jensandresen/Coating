@@ -50,14 +50,14 @@
     <Compile Include="DataRecordExtensions.cs" />
     <Compile Include="DefaultCommandExecutor.cs" />
     <Compile Include="DefaultCommandMapper.cs" />
-    <Compile Include="Documents.cs" />
+    <Compile Include="DocumentStore.cs" />
     <Compile Include="DocumentsBuilder.cs" />
     <Compile Include="ICommandExecutor.cs" />
     <Compile Include="ICommandFactory.cs" />
     <Compile Include="ICommandMapper.cs" />
     <Compile Include="IStorageFacade.cs" />
     <Compile Include="IdMap.cs" />
-    <Compile Include="IDocuments.cs" />
+    <Compile Include="IDocumentStore.cs" />
     <Compile Include="IIdMap.cs" />
     <Compile Include="IIdService.cs" />
     <Compile Include="ISerializationService.cs" />

@@ -24,25 +24,25 @@ namespace Coating.Tests
                 IIdService idService = new ConventionBasedIdService("Id");
                 ITypeService typeService = new TypeService();
                 ISerializationService serializationService = new JsonSerializationService();
-                IDocuments documents = new Documents(storageFacade, idService, typeService, serializationService);
+                IDocumentStore documentStore = new DocumentStore(storageFacade, idService, typeService, serializationService);
 
-                documents.Store(new Person
+                documentStore.Store(new Person
                     {
                         Id = "1",
                         Name = "John Doe",
                         Age = 16
                     });
 
-                var storedPerson = documents.Retrieve<Person>("1");
+                var storedPerson = documentStore.Retrieve<Person>("1");
 
                 Assert.IsNotNull(storedPerson);
                 Assert.AreEqual("1", storedPerson.Id);
                 Assert.AreEqual("John Doe", storedPerson.Name);
                 Assert.AreEqual(16, storedPerson.Age);
 
-                documents.Delete<Person>("1");
+                documentStore.Delete<Person>("1");
 
-                storedPerson = documents.Retrieve<Person>("1");
+                storedPerson = documentStore.Retrieve<Person>("1");
                 Assert.IsNull(storedPerson);
             }
         }
