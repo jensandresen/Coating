@@ -2,7 +2,7 @@
 
 namespace Coating.Tests.TestDoubles
 {
-    public abstract class AbstractDatabaseFacade : IDatabaseFacade
+    public abstract class AbstractStorageFacade : IStorageFacade
     {
         public virtual void Insert(DataDocument document)
         {

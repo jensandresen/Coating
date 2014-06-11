@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace Coating.Tests.TestDoubles
 {
-    public class StubDatabaseFacade : AbstractDatabaseFacade
+    public class StubStorageFacade : AbstractStorageFacade
     {
         private readonly DataDocument _selectByIdResult;
         private readonly IEnumerable<DataDocument> _selectByTypeResult;
         private readonly bool _containsResult;
 
-        public StubDatabaseFacade(DataDocument selectByIdResult = null, IEnumerable<DataDocument> selectByTypeResult = null, bool containsResult = true)
+        public StubStorageFacade(DataDocument selectByIdResult = null, IEnumerable<DataDocument> selectByTypeResult = null, bool containsResult = true)
         {
             _selectByIdResult = selectByIdResult;
             _selectByTypeResult = selectByTypeResult;

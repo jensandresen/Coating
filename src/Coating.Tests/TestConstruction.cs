@@ -19,12 +19,12 @@ namespace Coating.Tests
                 ICommandFactory commandFactory = new CommandFactory("Data");
                 ICommandMapper mapper = new DefaultCommandMapper();
                 ICommandExecutor commandExecutor = new TransactionalCommandExecutor(connection, mapper);
-                IDatabaseFacade databaseFacade = new DatabaseFacade(commandFactory, commandExecutor);
+                IStorageFacade storageFacade = new StorageFacade(commandFactory, commandExecutor);
 
                 IIdService idService = new ConventionBasedIdService("Id");
                 ITypeService typeService = new TypeService();
                 ISerializationService serializationService = new JsonSerializationService();
-                IDocuments documents = new Documents(databaseFacade, idService, typeService, serializationService);
+                IDocuments documents = new Documents(storageFacade, idService, typeService, serializationService);
 
                 documents.Store(new Person
                     {

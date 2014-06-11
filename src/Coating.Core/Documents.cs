@@ -4,22 +4,22 @@ namespace Coating
 {
     public class Documents : IDocuments
     {
-        private readonly IDatabaseFacade _databaseFacade;
+        private readonly IStorageFacade _storageFacade;
         private readonly IIdService _idService;
         private readonly ITypeService _typeService;
         private readonly ISerializationService _serializationService;
 
-        public Documents(IDatabaseFacade databaseFacade, IIdService idService, ITypeService typeService, ISerializationService serializationService)
+        public Documents(IStorageFacade storageFacade, IIdService idService, ITypeService typeService, ISerializationService serializationService)
         {
-            _databaseFacade = databaseFacade;
+            _storageFacade = storageFacade;
             _idService = idService;
             _typeService = typeService;
             _serializationService = serializationService;
         }
 
-        public IDatabaseFacade DatabaseFacade
+        public IStorageFacade StorageFacade
         {
-            get { return _databaseFacade; }
+            get { return _storageFacade; }
         }
 
         public IIdService IdService
@@ -44,7 +44,7 @@ namespace Coating
             var id = string.Format("{0}/{1}", documentType, documentId);
 
             var data = _serializationService.Serialize(document);
-            _databaseFacade.Insert(new DataDocument
+            _storageFacade.Insert(new DataDocument
                 {
                     Id = id,
                     Type = documentType,
@@ -59,7 +59,7 @@ namespace Coating
             var id = string.Format("{0}/{1}", documentType, documentId);
 
             var data = _serializationService.Serialize(document);
-            _databaseFacade.Update(new DataDocument
+            _storageFacade.Update(new DataDocument
                 {
                     Id = id,
                     Type = documentType,
@@ -73,7 +73,7 @@ namespace Coating
             var documentType = _typeService.GetTypeNameFrom(document);
             var id = string.Format("{0}/{1}", documentType, documentId);
 
-            return _databaseFacade.Contains(id);
+            return _storageFacade.Contains(id);
         }
 
         public void Store<T>(T document) where T : class
@@ -95,7 +95,7 @@ namespace Coating
             var documentType = _typeService.GetTypeNameFrom<T>();
             var dataDocumentId = string.Format("{0}/{1}", documentType, id);
 
-            var dataDocument = _databaseFacade.SelectById(dataDocumentId);  
+            var dataDocument = _storageFacade.SelectById(dataDocumentId);  
 
             if (dataDocument == null)
             {
@@ -108,7 +108,7 @@ namespace Coating
         public IEnumerable<T> RetrieveAll<T>() where T : class, new()
         {
             var typeName = _typeService.GetTypeNameFrom<T>();
-            var dataDocuments = _databaseFacade.SelectByType(typeName);
+            var dataDocuments = _storageFacade.SelectByType(typeName);
 
             foreach (var document in dataDocuments) 
             {
@@ -121,7 +121,7 @@ namespace Coating
             var documentType = _typeService.GetTypeNameFrom<T>();
             var documentId = string.Format("{0}/{1}", documentType, id);
 
-            _databaseFacade.Delete(documentId);
+            _storageFacade.Delete(documentId);
         }
     }
 }

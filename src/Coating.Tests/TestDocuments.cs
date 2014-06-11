@@ -10,15 +10,15 @@ namespace Coating.Tests
     public class TestDocuments
     {
         [Test]
-        public void database_facade_returns_expected()
+        public void storage_facade_returns_expected()
         {
-            var dummyDatabaseFacade = new Mock<IDatabaseFacade>().Object;
+            var dummyStorageFacade = new Mock<IStorageFacade>().Object;
 
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(dummyDatabaseFacade)
+                .WithStorageFacade(dummyStorageFacade)
                 .Build();
 
-            Assert.AreSame(dummyDatabaseFacade, sut.DatabaseFacade);
+            Assert.AreSame(dummyStorageFacade, sut.StorageFacade);
         }
 
         [Test]
@@ -60,10 +60,10 @@ namespace Coating.Tests
         [Test]
         public void inserts_data_document_when_saving()
         {
-            var mock = new Mock<IDatabaseFacade>();
+            var mock = new Mock<IStorageFacade>();
 
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(mock.Object)
+                .WithStorageFacade(mock.Object)
                 .Build();
 
             var dummyDocument = new object();
@@ -77,18 +77,18 @@ namespace Coating.Tests
         [TestCase("Foo", "Bar", "Foo/Bar")]
         public void generates_expected_id_from_document_when_saving(string documentTypeName, string documentId, string expectedId)
         {
-            var spyDatabaseFacade = new SpyDatabaseFacade();
+            var spyStorageFacade = new SpyStorageFacade();
 
             var sut = new DocumentsBuilder()
                 .WithIdService(new StubIdService(documentId))
                 .WithTypeService(new StubTypeService(documentTypeName))
-                .WithDatabaseFacade(spyDatabaseFacade)
+                .WithStorageFacade(spyStorageFacade)
                 .Build();
 
             var dummyDocument = new object();
             sut.Save(dummyDocument);
 
-            Assert.AreEqual(expectedId, spyDatabaseFacade.insertedDocument.Id);
+            Assert.AreEqual(expectedId, spyStorageFacade.insertedDocument.Id);
         }
 
         [TestCase("Foo")]
@@ -97,17 +97,17 @@ namespace Coating.Tests
         [TestCase("Qux")]
         public void generates_expected_typename_from_document_when_saving(string expectedTypeName)
         {
-            var spyDatabaseFacade = new SpyDatabaseFacade();
+            var spyStorageFacade = new SpyStorageFacade();
 
             var sut = new DocumentsBuilder()
                 .WithTypeService(new StubTypeService(expectedTypeName))
-                .WithDatabaseFacade(spyDatabaseFacade)
+                .WithStorageFacade(spyStorageFacade)
                 .Build();
 
             var dummyDocument = new object();
             sut.Save(dummyDocument);
 
-            Assert.AreEqual(expectedTypeName, spyDatabaseFacade.insertedDocument.Type);
+            Assert.AreEqual(expectedTypeName, spyStorageFacade.insertedDocument.Type);
         }
 
         [TestCase("Foo")]
@@ -116,17 +116,17 @@ namespace Coating.Tests
         [TestCase("Qux")]
         public void generates_expected_data_from_document_when_saving(string expectedData)
         {
-            var spyDatabaseFacade = new SpyDatabaseFacade();
+            var spyStorageFacade = new SpyStorageFacade();
 
             var sut = new DocumentsBuilder()
                 .WithSerializationService(new StubSerializationService(expectedData))
-                .WithDatabaseFacade(spyDatabaseFacade)
+                .WithStorageFacade(spyStorageFacade)
                 .Build();
 
             var dummyDocument = new object();
             sut.Save(dummyDocument);
 
-            Assert.AreEqual(expectedData, spyDatabaseFacade.insertedDocument.Data);
+            Assert.AreEqual(expectedData, spyStorageFacade.insertedDocument.Data);
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace Coating.Tests
             DataDocument nullDataDocument = null;
 
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(new StubDatabaseFacade(nullDataDocument))
+                .WithStorageFacade(new StubStorageFacade(nullDataDocument))
                 .Build();
 
             var result = sut.Retrieve<object>("dummy id");
@@ -154,7 +154,7 @@ namespace Coating.Tests
                 };
 
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(new StubDatabaseFacade(stubDataDocument))
+                .WithStorageFacade(new StubStorageFacade(stubDataDocument))
                 .WithSerializationService(mockSerializationService.Object)
                 .Build();
 
@@ -171,7 +171,7 @@ namespace Coating.Tests
 
             var sut = new DocumentsBuilder()
                 .WithSerializationService(new StubSerializationService(deserializationResult: expected))
-                .WithDatabaseFacade(new StubDatabaseFacade(dummyDataDocument))
+                .WithStorageFacade(new StubStorageFacade(dummyDataDocument))
                 .Build();
 
             var result = sut.Retrieve<object>("dummy id");
@@ -183,7 +183,7 @@ namespace Coating.Tests
         public void retrieveall_returns_empty_list_when_nothing_was_found()
         {
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(new StubDatabaseFacade(selectByTypeResult: Enumerable.Empty<DataDocument>()))
+                .WithStorageFacade(new StubStorageFacade(selectByTypeResult: Enumerable.Empty<DataDocument>()))
                 .Build();
 
             var result = sut.RetrieveAll<object>();
@@ -198,16 +198,16 @@ namespace Coating.Tests
         [TestCase("Qux")]
         public void retrieveall_uses_expected_typename_to_retrieve_data_documents(string expectedTypeName)
         {
-            var mockDatabaseFacade = new Mock<IDatabaseFacade>();
+            var mockStorageFacade = new Mock<IStorageFacade>();
 
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(mockDatabaseFacade.Object)
+                .WithStorageFacade(mockStorageFacade.Object)
                 .WithTypeService(new StubTypeService(expectedTypeName))
                 .Build();
 
             sut.RetrieveAll<object>().ToArray();
 
-            mockDatabaseFacade.Verify(x => x.SelectByType(expectedTypeName));
+            mockStorageFacade.Verify(x => x.SelectByType(expectedTypeName));
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace Coating.Tests
 
             var sut = new DocumentsBuilder()
                 .WithSerializationService(mockSerializationService.Object)
-                .WithDatabaseFacade(new StubDatabaseFacade(selectByTypeResult: new[]
+                .WithStorageFacade(new StubStorageFacade(selectByTypeResult: new[]
                     {
                         new DataDocument(),
                         new DataDocument(),
@@ -235,17 +235,17 @@ namespace Coating.Tests
         [TestCase("Foo", "Bar", "Foo/Bar")]
         public void contains_uses_expected_id(string documentTypeName, string documentId, string expectedId)
         {
-            var mockDatabaseFacade = new Mock<IDatabaseFacade>();
+            var mockStorageFacade = new Mock<IStorageFacade>();
 
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(mockDatabaseFacade.Object)
+                .WithStorageFacade(mockStorageFacade.Object)
                 .WithTypeService(new StubTypeService(documentTypeName))
                 .WithIdService(new StubIdService(documentId))
                 .Build();
 
             sut.Contains(new object());
 
-            mockDatabaseFacade.Verify(x => x.Contains(expectedId));
+            mockStorageFacade.Verify(x => x.Contains(expectedId));
         }
 
         [TestCase(true)]
@@ -253,7 +253,7 @@ namespace Coating.Tests
         public void contains_returns_the_same_as_database_facade(bool expected)
         {
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(new StubDatabaseFacade(containsResult: expected))
+                .WithStorageFacade(new StubStorageFacade(containsResult: expected))
                 .Build();
 
             var actual = sut.Contains(new object());
@@ -266,51 +266,51 @@ namespace Coating.Tests
         [TestCase("Foo", "Bar", "Foo/Bar")]
         public void delete_uses_expected_id(string documentTypeName, string documentId, string expectedId)
         {
-            var mockDatabaseFacade = new Mock<IDatabaseFacade>();
+            var mockStorageFacade = new Mock<IStorageFacade>();
 
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(mockDatabaseFacade.Object)
+                .WithStorageFacade(mockStorageFacade.Object)
                 .WithTypeService(new StubTypeService(documentTypeName))
                 .WithIdService(new StubIdService(documentId))
                 .Build();
 
             sut.Delete<object>(documentId);
 
-            mockDatabaseFacade.Verify(x => x.Delete(expectedId));
+            mockStorageFacade.Verify(x => x.Delete(expectedId));
         }
 
         [Test]
         public void store_only_updates_document_if_it_already_exists()
         {
-            var mockDatabaseFacade = new Mock<IDatabaseFacade>();
-            mockDatabaseFacade
+            var mockStorageFacade = new Mock<IStorageFacade>();
+            mockStorageFacade
                 .Setup(x => x.Contains(It.IsAny<string>()))
                 .Returns(true);
 
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(mockDatabaseFacade.Object)
+                .WithStorageFacade(mockStorageFacade.Object)
                 .Build();
 
             sut.Store(new object());
 
-            mockDatabaseFacade.Verify(x => x.Update(It.IsAny<DataDocument>()));
+            mockStorageFacade.Verify(x => x.Update(It.IsAny<DataDocument>()));
         }
 
         [Test]
         public void store_inserts_document_if_it_does_not_already_exists()
         {
-            var mockDatabaseFacade = new Mock<IDatabaseFacade>();
-            mockDatabaseFacade
+            var mockStorageFacade = new Mock<IStorageFacade>();
+            mockStorageFacade
                 .Setup(x => x.Contains(It.IsAny<string>()))
                 .Returns(false);
 
             var sut = new DocumentsBuilder()
-                .WithDatabaseFacade(mockDatabaseFacade.Object)
+                .WithStorageFacade(mockStorageFacade.Object)
                 .Build();
 
             sut.Store(new object());
 
-            mockDatabaseFacade.Verify(x => x.Insert(It.IsAny<DataDocument>()));
+            mockStorageFacade.Verify(x => x.Insert(It.IsAny<DataDocument>()));
         }
     }
 }

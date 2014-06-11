@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\DatabaseFacadeBuilder.cs" />
+    <Compile Include="Builders\StorageFacadeBuilder.cs" />
     <Compile Include="Builders\DefaultCommandExecutorBuilder.cs" />
     <Compile Include="Builders\DocumentsBuilder.cs" />
     <Compile Include="Builders\SqlCommandBuilder.cs" />
@@ -56,20 +56,20 @@
     <Compile Include="TestConventionBasedIdService.cs" />
     <Compile Include="TestCompositeIdService.cs" />
     <Compile Include="TestConstruction.cs" />
-    <Compile Include="TestDatabaseFacade.cs" />
+    <Compile Include="TestStorageFacade.cs" />
     <Compile Include="TestDataRecordExtensions.cs" />
     <Compile Include="TestDefaultCommandExecutor.cs" />
     <Compile Include="TestDefaultCommandMapper.cs" />
     <Compile Include="TestDocuments.cs" />
-    <Compile Include="TestDoubles\AbstractDatabaseFacade.cs" />
+    <Compile Include="TestDoubles\AbstractStorageFacade.cs" />
     <Compile Include="TestDoubles\FakeDataReader.cs" />
-    <Compile Include="TestDoubles\SpyDatabaseFacade.cs" />
+    <Compile Include="TestDoubles\SpyStorageFacade.cs" />
     <Compile Include="TestDoubles\SpyDbCommand.cs" />
     <Compile Include="TestDoubles\SpyIdService.cs" />
     <Compile Include="TestDoubles\StubCommandExecutor.cs" />
     <Compile Include="TestDoubles\StubCommandFactory.cs" />
     <Compile Include="TestDoubles\StubCommandMapper.cs" />
-    <Compile Include="TestDoubles\StubDatabaseFacade.cs" />
+    <Compile Include="TestDoubles\StubStorageFacade.cs" />
     <Compile Include="TestDoubles\StubDataRecord.cs" />
     <Compile Include="TestDoubles\StubDbConnection.cs" />
     <Compile Include="TestDoubles\StubIdService.cs" />

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Coating
 {
-    public interface IDatabaseFacade
+    public interface IStorageFacade
     {
         void Insert(DataDocument document);
         void Update(DataDocument document);

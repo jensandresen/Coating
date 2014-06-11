@@ -45,7 +45,7 @@
     <Compile Include="ConventionBasedIdService.cs" />
     <Compile Include="CommandFactory.cs" />
     <Compile Include="CompositeIdService.cs" />
-    <Compile Include="DatabaseFacade.cs" />
+    <Compile Include="StorageFacade.cs" />
     <Compile Include="DataDocument.cs" />
     <Compile Include="DataRecordExtensions.cs" />
     <Compile Include="DefaultCommandExecutor.cs" />
@@ -55,7 +55,7 @@
     <Compile Include="ICommandExecutor.cs" />
     <Compile Include="ICommandFactory.cs" />
     <Compile Include="ICommandMapper.cs" />
-    <Compile Include="IDatabaseFacade.cs" />
+    <Compile Include="IStorageFacade.cs" />
     <Compile Include="IdMap.cs" />
     <Compile Include="IDocuments.cs" />
     <Compile Include="IIdMap.cs" />

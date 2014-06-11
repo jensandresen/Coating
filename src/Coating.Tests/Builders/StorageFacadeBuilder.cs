@@ -2,32 +2,32 @@
 
 namespace Coating.Tests.Builders
 {
-    public class DatabaseFacadeBuilder
+    public class StorageFacadeBuilder
     {
         private ICommandFactory _commandFactory;
         private ICommandExecutor _commandExecutor;
 
-        public DatabaseFacadeBuilder()
+        public StorageFacadeBuilder()
         {
             _commandFactory = new Mock<ICommandFactory>().Object;
             _commandExecutor = new Mock<ICommandExecutor>().Object;
         }
 
-        public DatabaseFacadeBuilder WithCommandFactory(ICommandFactory commandFactory)
+        public StorageFacadeBuilder WithCommandFactory(ICommandFactory commandFactory)
         {
             _commandFactory = commandFactory;
             return this;
         }
 
-        public DatabaseFacadeBuilder WithExecutor(ICommandExecutor commandExecutor)
+        public StorageFacadeBuilder WithExecutor(ICommandExecutor commandExecutor)
         {
             _commandExecutor = commandExecutor;
             return this;
         }
 
-        public DatabaseFacade Build()
+        public StorageFacade Build()
         {
-            return new DatabaseFacade(_commandFactory, _commandExecutor);
+            return new StorageFacade(_commandFactory, _commandExecutor);
         }
     }
 }

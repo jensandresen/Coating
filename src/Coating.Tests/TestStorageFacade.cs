@@ -8,14 +8,14 @@ using NUnit.Framework;
 namespace Coating.Tests
 {
     [TestFixture]
-    public class TestDatabaseFacade
+    public class TestStorageFacade
     {
         [Test]
         public void creates_expected_command_for_insert()
         {
             var mockCommandFactory = new Mock<ICommandFactory>();
 
-            var sut = new DatabaseFacadeBuilder()
+            var sut = new StorageFacadeBuilder()
                 .WithCommandFactory(mockCommandFactory.Object)
                 .Build();
 
@@ -39,7 +39,7 @@ namespace Coating.Tests
             var dummyDocument = new DataDocument();
             var dummyCommand = new SqlCommandBuilder().Build();
 
-            var sut = new DatabaseFacadeBuilder()
+            var sut = new StorageFacadeBuilder()
                 .WithCommandFactory(new StubCommandFactory(insert: dummyCommand))
                 .WithExecutor(mock.Object)
                 .Build();
@@ -54,7 +54,7 @@ namespace Coating.Tests
         {
             var mockCommandFactory = new Mock<ICommandFactory>();
 
-            var sut = new DatabaseFacadeBuilder()
+            var sut = new StorageFacadeBuilder()
                 .WithCommandFactory(mockCommandFactory.Object)
                 .Build();
 
@@ -78,7 +78,7 @@ namespace Coating.Tests
             var dummyDocument = new DataDocument();
             var dummyCommand = new SqlCommandBuilder().Build();
 
-            var sut = new DatabaseFacadeBuilder()
+            var sut = new StorageFacadeBuilder()
                 .WithCommandFactory(new StubCommandFactory(update: dummyCommand))
                 .WithExecutor(mock.Object)
                 .Build();
@@ -95,7 +95,7 @@ namespace Coating.Tests
 
             var dummyCommand = new SqlCommandBuilder().Build();
 
-            var sut = new DatabaseFacadeBuilder()
+            var sut = new StorageFacadeBuilder()
                 .WithCommandFactory(new StubCommandFactory(selectById: dummyCommand))
                 .WithExecutor(mock.Object)
                 .Build();
@@ -112,7 +112,7 @@ namespace Coating.Tests
 
             var dummyCommand = new SqlCommandBuilder().Build();
 
-            var sut = new DatabaseFacadeBuilder()
+            var sut = new StorageFacadeBuilder()
                 .WithCommandFactory(new StubCommandFactory(selectByType: dummyCommand))
                 .WithExecutor(mock.Object)
                 .Build();
@@ -129,7 +129,7 @@ namespace Coating.Tests
 
             var dummyCommand = new SqlCommandBuilder().Build();
 
-            var sut = new DatabaseFacadeBuilder()
+            var sut = new StorageFacadeBuilder()
                 .WithCommandFactory(new StubCommandFactory(delete: dummyCommand))
                 .WithExecutor(mock.Object)
                 .Build();
@@ -142,7 +142,7 @@ namespace Coating.Tests
         [Test]
         public void contains_returns_expected_when_nothing_was_found()
         {
-            var sut = new DatabaseFacadeBuilder().Build();
+            var sut = new StorageFacadeBuilder().Build();
             var result = sut.Contains("non-existing-id");
 
             Assert.IsFalse(result);
@@ -153,7 +153,7 @@ namespace Coating.Tests
         {
             var dummyDataRecord = new Mock<IDataRecord>().Object;
 
-            var sut = new DatabaseFacadeBuilder()
+            var sut = new StorageFacadeBuilder()
                 .WithExecutor(new StubCommandExecutor(readResult: dummyDataRecord))
                 .Build();
 

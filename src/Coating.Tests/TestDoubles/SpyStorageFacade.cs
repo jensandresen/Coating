@@ -1,6 +1,6 @@
 ﻿namespace Coating.Tests.TestDoubles
 {
-    public class SpyDatabaseFacade : AbstractDatabaseFacade
+    public class SpyStorageFacade : AbstractStorageFacade
     {
         public DataDocument insertedDocument;
         public DataDocument updatedDocument;

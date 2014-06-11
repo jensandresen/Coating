@@ -4,22 +4,22 @@ namespace Coating.Tests.Builders
 {
     public class DocumentsBuilder
     {
-        private IDatabaseFacade _databaseFacade;
+        private IStorageFacade _storageFacade;
         private IIdService _idService;
         private ITypeService _typeService;
         private ISerializationService _serializationService;
 
         public DocumentsBuilder()
         {
-            _databaseFacade = new Mock<IDatabaseFacade>().Object;
+            _storageFacade = new Mock<IStorageFacade>().Object;
             _idService = new Mock<IIdService>().Object;
             _typeService = new Mock<ITypeService>().Object;
             _serializationService = new Mock<ISerializationService>().Object;
         }
 
-        public DocumentsBuilder WithDatabaseFacade(IDatabaseFacade databaseFacade)
+        public DocumentsBuilder WithStorageFacade(IStorageFacade storageFacade)
         {
-            _databaseFacade = databaseFacade;
+            _storageFacade = storageFacade;
             return this;
         }
 
@@ -43,7 +43,7 @@ namespace Coating.Tests.Builders
 
         public Documents Build()
         {
-            return new Documents(_databaseFacade, _idService, _typeService, _serializationService);
+            return new Documents(_storageFacade, _idService, _typeService, _serializationService);
         }
     }
 }
