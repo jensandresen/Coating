@@ -30,3 +30,11 @@ Task Compile -depends Clean -description "Builds the solution in release mode to
         msbuild "$solutionFilePath" /p:OutputPath="$outputDir" /p:Configuration="Release" /p:Platform="Any CPU" /nologo /verbosity:q
     }    
 }
+
+Task Pack  {
+
+    exec {
+        & nuget pack "$sourceDir\Coating.Core\Coating.Core.csproj" -Build -OutputDirectory "$outputDir" -Properties Configuration=Release
+    }
+
+}
