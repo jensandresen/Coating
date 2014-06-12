@@ -4,12 +4,12 @@ using NUnit.Framework;
 
 namespace Coating.Tests
 {
-    [TestFixture, Ignore]
+    [TestFixture]
     public class TestConstruction
     {
         private const string ConnectionString = "Server=.;Database=Coating;Trusted_Connection=True;";
 
-        [Test]
+        [Test, Ignore]
         public void end_to_end_store_and_retrieve()
         {
             using (IDbConnection connection = new SqlConnection(ConnectionString))

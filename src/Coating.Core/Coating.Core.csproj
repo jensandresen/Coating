@@ -45,6 +45,7 @@
     <Compile Include="ConventionBasedIdService.cs" />
     <Compile Include="CommandFactory.cs" />
     <Compile Include="CompositeIdService.cs" />
+    <Compile Include="DocumentStoreFactory.cs" />
     <Compile Include="StorageFacade.cs" />
     <Compile Include="DataDocument.cs" />
     <Compile Include="DataRecordExtensions.cs" />
