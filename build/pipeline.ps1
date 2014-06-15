@@ -38,3 +38,12 @@ Task Pack  {
     }
 
 }
+
+Task Publish {
+
+    $packageFile = gci -Include "Coating.Core.*.nupkg" -Path "$outputDir" -Recurse | select -First 1 | select -ExpandProperty FullName
+
+    exec {
+        & nuget push "$packageFile"
+    }
+}
